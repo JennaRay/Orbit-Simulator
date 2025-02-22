@@ -53,7 +53,9 @@ public:
 
       //set gps meters for prototype
       ptGPS.setMeters(0.0, getGeoDistance());
-
+      t = 1;
+      a = angleShip;
+      v = getVelocity(getGeoSpeed(), a, t);
       angleShip = 0.0;
       angleEarth = 0.0;
       phaseStar = 0;
@@ -72,6 +74,10 @@ public:
 
    double angleShip;
    double angleEarth;
+
+   double a;
+   double v;
+   double t;
 };
 
 /*************************************
@@ -110,6 +116,9 @@ void callBack(const Interface* pUI, void* p)
    pDemo->angleEarth += 0.01;
    pDemo->angleShip += 0.02;
    pDemo->phaseStar++;
+
+   // orbit sattelite prototype
+   movePrototype(pDemo->ptGPS, pDemo->a, pDemo->v, pDemo->t);
 
    //
    // draw everything

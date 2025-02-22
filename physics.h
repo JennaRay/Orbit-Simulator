@@ -270,25 +270,25 @@ double getVelocityComponent(double dx0, double ddx, double t)
 * completel one loop of the calculations to move 
 * the prototype in orbit
 ***********************************************/
-void movePrototype(Position& PTpos)
+void movePrototype(Position& PTpos, double& angle, double& v, double& t)
 {
    double x = PTpos.getMetersX();
    double y = PTpos.getMetersY();
 
-   //time?
-   double t = 1;
-
    // figure out acceleration (we already have gravity defined above)
    double gn = getGravity(y);
-   double angle = getDirectionOfGravityPull(x, y);
    double ddx = getHorizontalComponentOfAcceleration(gn, angle);
    double ddy = getVerticalComponentOfAcceleration(gn, angle);
    
    // figure out velocity
-   double v = getVelocity(geoSpeed, angle, t);
+   double newV = getVelocity(v, angle, t);
+   v = newV;
    // gonna use these functions bc I'm pretty sure the math should work for velocity to
-   double dx = getHorizontalComponentOfAcceleration(v, angle);
-   double dy = getVerticalComponentOfAcceleration(v, angle);
+   double dx = getHorizontalComponentOfAcceleration(newV, angle);
+   double dy = getVerticalComponentOfAcceleration(newV, angle);
 
    // figure out new distance maybe is next?
+   double newX = getDistanceComponent(x, dx, t, ddx);
+   double newY = getDistanceComponent(y, dy, t, ddy);
+   PTpos.setMeters(newX, newY);
 }
