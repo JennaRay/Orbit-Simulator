@@ -119,7 +119,7 @@ void callBack(const Interface* pUI, void* p)
 
    // orbit sattelite prototype
    movePrototype(pDemo->ptGPS, pDemo->a, pDemo->v, pDemo->t);
-
+   pDemo->a = pDemo->angleShip;
    //
    // draw everything
    //
