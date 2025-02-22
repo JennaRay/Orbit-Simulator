@@ -10,6 +10,26 @@
 
 using namespace std;
 
+
+// TIME CONSTANTS
+constexpr int secondsMinute = 60;
+constexpr int minutesHour = 60;
+constexpr int hoursDay = 24;
+constexpr int frameRate = 30;
+constexpr int secondsDay = hoursDay * minutesHour * secondsMinute; // 86400 seconds / day
+
+// EARTH CONSTANTS
+constexpr double geoDistance = 42164000.0; // Distance from Earth to satellite in meters
+constexpr double g = 9.80665; // Gravitational acceleration (m/s^2)
+constexpr double r = 6378000.0; // Radius of Earth in meters
+
+
+void timeCalculation() {
+    double td = hoursDay * minutesHour; // Time Dilation
+    double tpf = td / frameRate; // Time Per Frame
+}
+
+
 //Earth equations from the directions
 
 /*********************************************
