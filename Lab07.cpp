@@ -114,34 +114,34 @@ void callBack(const Interface* pUI, void* p)
    ogstream gout(pt);
 
    // draw satellites
-   gout.drawCrewDragon(pDemo->ptCrewDragon, pDemo->angleShip);
-   gout.drawHubble    (pDemo->ptHubble,     pDemo->angleShip);
-   gout.drawSputnik   (pDemo->ptSputnik,    pDemo->angleShip);
-   gout.drawStarlink  (pDemo->ptStarlink,   pDemo->angleShip);
-   gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
+   //gout.drawCrewDragon(pDemo->ptCrewDragon, pDemo->angleShip);
+   //gout.drawHubble    (pDemo->ptHubble,     pDemo->angleShip);
+   //gout.drawSputnik   (pDemo->ptSputnik,    pDemo->angleShip);
+   //gout.drawStarlink  (pDemo->ptStarlink,   pDemo->angleShip);
+   //gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
    gout.drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
 
    // draw parts
-   pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptCrewDragon.getPixelsY() + 20);
-   gout.drawCrewDragonRight(pt, pDemo->angleShip); // notice only two parameters are set
-   pt.setPixelsX(pDemo->ptHubble.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptHubble.getPixelsY() + 20);
-   gout.drawHubbleLeft(pt, pDemo->angleShip);      // notice only two parameters are set
-   pt.setPixelsX(pDemo->ptGPS.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptGPS.getPixelsY() + 20);
-   gout.drawGPSCenter(pt, pDemo->angleShip);       // notice only two parameters are set
-   pt.setPixelsX(pDemo->ptStarlink.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptStarlink.getPixelsY() + 20);
-   gout.drawStarlinkArray(pt, pDemo->angleShip);   // notice only two parameters are set
+   //pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptCrewDragon.getPixelsY() + 20);
+   //gout.drawCrewDragonRight(pt, pDemo->angleShip); // notice only two parameters are set
+   //pt.setPixelsX(pDemo->ptHubble.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptHubble.getPixelsY() + 20);
+   //gout.drawHubbleLeft(pt, pDemo->angleShip);      // notice only two parameters are set
+   //pt.setPixelsX(pDemo->ptGPS.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptGPS.getPixelsY() + 20);
+   //gout.drawGPSCenter(pt, pDemo->angleShip);       // notice only two parameters are set
+   //pt.setPixelsX(pDemo->ptStarlink.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptStarlink.getPixelsY() + 20);
+   //gout.drawStarlinkArray(pt, pDemo->angleShip);   // notice only two parameters are set
 
    // draw fragments
-   pt.setPixelsX(pDemo->ptSputnik.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptSputnik.getPixelsY() + 20);
-   gout.drawFragment(pt, pDemo->angleShip);
-   pt.setPixelsX(pDemo->ptShip.getPixelsX() + 20);
-   pt.setPixelsY(pDemo->ptShip.getPixelsY() + 20);
-   gout.drawFragment(pt, pDemo->angleShip);
+   //pt.setPixelsX(pDemo->ptSputnik.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptSputnik.getPixelsY() + 20);
+   //gout.drawFragment(pt, pDemo->angleShip);
+   //pt.setPixelsX(pDemo->ptShip.getPixelsX() + 20);
+   //pt.setPixelsY(pDemo->ptShip.getPixelsY() + 20);
+   //gout.drawFragment(pt, pDemo->angleShip);
 
    // draw a single star
    gout.drawStar(pDemo->ptStar, pDemo->phaseStar);
