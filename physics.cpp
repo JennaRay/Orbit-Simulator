@@ -4,11 +4,9 @@
 
 #include <iostream>
 #include <cmath>
-
 #define M_PI 3.14159265358979323846
 
 using namespace std;
-
 
 // TIME CONSTANTS
 constexpr int secondsMinute = 60;
@@ -23,9 +21,20 @@ constexpr double g = 9.80665; // Gravitational acceleration (m/s^2)
 constexpr double r = 6378000.0; // Radius of Earth in meters
 
 
-void timeCalculation() {
-    double td = hoursDay * minutesHour; // Time Dilation
-    double tpf = td / frameRate; // Time Per Frame
+// Time equations from the directions
+
+/*******************
+* GET TIME DILATION
+*******************/
+double getTd(int hoursDay, double minutesDay) {
+    return hoursDay * minutesHour;
+}
+
+/*******************
+*GET TIME PER FRAME
+*******************/
+double getTpf(double getTd, int frameRate) {
+    return getTd / frameRate;
 }
 
 
@@ -123,4 +132,6 @@ double getVerticalComponentOfAcceleration(double a, double angle)
    return a * cos(angle);
 }
 
+
 // Motion equations
+
