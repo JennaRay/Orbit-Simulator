@@ -54,7 +54,7 @@ public:
       //set gps meters for prototype
       ptGPS.setMeters(0.0, getGeoDistance());
       t = 1;
-      a = angleShip;
+      a = getDirectionOfGravityPull(ptGPS.getMetersX(), ptGPS.getMetersY());
       v = getVelocity(getGeoSpeed(), a, t);
       angleShip = 0.0;
       angleEarth = 0.0;
