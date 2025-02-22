@@ -16,6 +16,7 @@
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "position.h"      // for POINT
 #include "test.h"
+#include "physics.h"
 using namespace std;
 
 /*************************************************************************
@@ -49,6 +50,9 @@ public:
       ptStar.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
       ptStar.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
 
+
+      //set gps meters for prototype
+      ptGPS.setMeters(0.0, getGeoDistance());
       angleShip = 0.0;
       angleEarth = 0.0;
       phaseStar = 0;
