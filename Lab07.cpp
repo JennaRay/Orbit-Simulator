@@ -53,6 +53,7 @@ public:
 
       //set gps meters for prototype
       ptGPS.setMeters(0.0, getGeoDistance());
+
       angleShip = 0.0;
       angleEarth = 0.0;
       phaseStar = 0;

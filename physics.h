@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include "position.h"
 
 #define M_PI 3.14159265358979323846
 
@@ -16,12 +17,17 @@ constexpr int secondsDay = hoursDay * minutesHour * secondsMinute; // 86400 seco
 
 // EARTH CONSTANTS
 constexpr double geoDistance = 42164000.0; // Distance from Earth to satellite in meters
+constexpr double geoSpeed = 3100.0; // Speed of satellite in m/s
 constexpr double g = 9.80665; // Gravitational acceleration (m/s^2)
 constexpr double r = 6378000.0; // Radius of Earth in meters
 
 double getGeoDistance()
 {
    return 42164000.0;
+}
+double getGeoSpeed()
+{
+   return 3100.0;
 }
 // Time equations from the directions
 
@@ -77,8 +83,6 @@ double getRotationSpeed(double frameRate, double td)
 *************************************************/
 double getGravity(double h)
 {
-   double g = 9.80665;
-   double r = 6378000;
    return g * pow(r / (r + h), 2);
 }
 
@@ -259,4 +263,31 @@ double getDistanceComponent(double x0, double dx, double t, double ddx)
 double getVelocityComponent(double dx0, double ddx, double t)
 {
    return dx0 + ddx * t;
+}
+
+/*********************************************
+* MOVE PROTOTYPE
+* completel one loop of the calculations to move 
+* the prototype in orbit
+***********************************************/
+void movePrototype(Position& PTpos)
+{
+   double x = PTpos.getMetersX();
+   double y = PTpos.getMetersY();
+
+   //time?
+   double t = 1;
+
+   // figure out acceleration (we already have gravity defined above)
+   double gn = getGravity(y);
+   double angle = getDirectionOfGravityPull(x, y);
+   double ddx = getHorizontalComponentOfAcceleration(gn, angle);
+   double ddy = getVerticalComponentOfAcceleration(gn, angle);
+   
+   // figure out velocity
+   double v = getVelocity(geoSpeed, angle, t);
+   double dx = getHorizontalComponentOfAcceleration(v, angle);
+   double dy = getVerticalComponentOfAcceleration(v, angle);
+
+   // figure out new distance maybe is next?
 }
