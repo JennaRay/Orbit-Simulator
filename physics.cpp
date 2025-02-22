@@ -150,9 +150,10 @@ double getVerticalComponentOfAcceleration(double a, double angle)
 *      (This is a position on a coordinate plane)
 * s0 = initial position
 *************************************************/
-double newtonsFirstLaw(double s0)
+void newtonsFirstLaw(double& x, double& y, double x0, double y0)
 {
-    return s0;
+    x = x0;
+    y = y0;
 }
 
 /*******************************
@@ -164,14 +165,11 @@ double newtonsFirstLaw(double s0)
 * v = velocity (m/s)
 * t = time (s)
 *******************************/
-double motionConstantVelocity(double s0)
+double motionConstantVelocity(double s0, double v, double t)
 {
-    double s0;
-    double v;
-    double t;
-
     return s0 + (v * t);
 }
+
 
 /**********************************************
 * HORIZONTAL POSITION CONSTANT VELOCITY
