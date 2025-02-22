@@ -23,18 +23,22 @@ constexpr double r = 6378000.0; // Radius of Earth in meters
 
 // Time equations from the directions
 
-/*******************
+/***************************************
 * GET TIME DILATION
-*******************/
-double getTd(int hoursDay, double minutesDay) {
-    return hoursDay * minutesHour;
+* Equation: td = hoursDay x minutesHour
+***************************************/
+double getTd(int hoursDay, double minutesHour) {
+    double td = hoursDay * minutesHour;
+
+    return td;
 }
 
-/*******************
-*GET TIME PER FRAME
-*******************/
-double getTpf(double getTd, int frameRate) {
-    return getTd / frameRate;
+/********************************
+* GET TIME PER FRAME
+* Equation: tpf = td / frameRate
+********************************/
+double getTpf(double td, int frameRate) {
+    return td / frameRate;
 }
 
 
@@ -135,7 +139,67 @@ double getVerticalComponentOfAcceleration(double a, double angle)
 
 // Motion equations
 
+/*************************************************
+* NEWTON's FIRST LAW
+* Equation: st = s0
+*
+* s denotes a location that is expressed in
+* two dimensions (in an x, y coordinate plane)
+*
+* st = distance at a given time t.
+*      (This is a position on a coordinate plane)
+* s0 = initial position
+*************************************************/
+double newtonsFirstLaw(double s0)
+{
+    return s0;
+}
 
+/*******************************
+* MOTION WITH CONSTANT VELOCITY
+* Equation: s = s0 + vt
+*
+* s = distance in meters (m)
+* s0 = initial distance (m)
+* v = velocity (m/s)
+* t = time (s)
+*******************************/
+double motionConstantVelocity(double s0)
+{
+    double s0;
+    double v;
+    double t;
+
+    return s0 + (v * t);
+}
+
+/**********************************************
+* HORIZONTAL POSITION CONSTANT VELOCITY
+* Equation: xt = x0 + dx t
+*
+* x = horizontal position at time t (m)
+* x0 = initial horizontal position (m)
+* dx = horizontal component of velocity (m/s)
+* t = time (s)
+**********************************************/
+double hPosConstantVelocity(double x0, double dx, double t)
+{
+    return x0 + (dx * t);
+}
+
+/**********************************************
+* VERTICAL POSITION CONSTANT VELOCITY
+* Equation: xt = x0 + dx t
+*
+* y = vertical position at time t (m)
+* y0 = initial vertical position (m)
+* dx = vertical component of velocity (m/s)
+* t = time (s)
+**********************************************/
+double vPosConstantVelocity(double y0, double yx, double t)
+{
+    return y0 + (yx * t);
+}
 
 /*********************************************
 * GET DISTANCE 
