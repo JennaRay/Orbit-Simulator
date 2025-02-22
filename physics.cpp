@@ -135,3 +135,65 @@ double getVerticalComponentOfAcceleration(double a, double angle)
 
 // Motion equations
 
+
+
+/*********************************************
+* GET DISTANCE 
+* s = s0 + v t + ½ a t^2
+* 
+    s = distance in meters (m)
+    s0 = initial distance (m)
+    v = velocity (m/s)
+    t = time (s)
+    a = acceleration (m/s2)
+*************************************************/
+double getDistance(double s0, double v, double t, double a)
+{
+   return s0 + v * t + 0.5 * a * pow(t, 2);
+}
+
+/*********************************************
+* GET VELOCITY
+* v = v0 + a t
+* 
+* 
+    v = velocity in meters (m/s)
+    v0 = initial velocity (m/s)
+    a = acceleration (m/s2)
+    t = time (s)
+*************************************************/
+double getVelocity(double v0, double a, double t)
+{
+   return v0 + a * t;
+}
+
+/*********************************************
+* GET DISTANCE COMPONENT
+* use to get horizontal distance or vertical distance
+* xt = x0 + dx t + ½ ddx t^2
+* 
+    xt = horizontal position at time t (m)
+    x0 = initial horizontal position (m)
+    dx = horizontal component of velocity (m/s)
+    ddx = horizontal component of acceleration (m/s2)
+    t = time (s)
+*******************************************************/
+double getDistanceComponent(double x0, double dx, double t, double ddx)
+{
+   return x0 + dx * t + 0.5 * ddx * pow(t, 2);
+}
+
+/*********************************************
+* GET VELOCITY COMPONENT
+* use to get horizontal velocity or vertical velocity
+* dxt = dx0 + ddx t
+* 
+    dxt = horizontal velocity at time t (m/s)
+    dx0 = initial horizontal velocity (m/s)
+    ddx = horizontal component of acceleration (m/s2)
+    t = time (s)
+*******************************************************/
+double getVelocityComponent(double dx0, double ddx, double t)
+{
+   return dx0 + ddx * t;
+}
