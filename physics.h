@@ -286,6 +286,7 @@ void movePrototype(Position& PTpos)
    
    // figure out velocity
    double v = getVelocity(geoSpeed, angle, t);
+   // gonna use these functions bc I'm pretty sure the math should work for velocity to
    double dx = getHorizontalComponentOfAcceleration(v, angle);
    double dy = getVerticalComponentOfAcceleration(v, angle);
 
