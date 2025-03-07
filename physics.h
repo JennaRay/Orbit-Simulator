@@ -274,7 +274,7 @@ void movePrototype(Position& PTpos, double& angle, double& v, double& t)
 {
    double x = PTpos.getMetersX();
    double y = PTpos.getMetersY();
-   cout << x << "," << y << endl;
+   //cout << x << "," << y << endl;
    // figure out acceleration (we already have gravity defined above)
    double gn = getGravity(y);
    double ddx = getHorizontalComponentOfAcceleration(gn, angle);
@@ -290,6 +290,6 @@ void movePrototype(Position& PTpos, double& angle, double& v, double& t)
    // figure out new distance maybe is next?
    double newX = getDistanceComponent(x, dx, t, ddx);
    double newY = getDistanceComponent(y, dy, t, ddy);
-   cout << newX << "," << newY << endl;
+   //cout << newX << "," << newY << endl;
    PTpos.setMeters(newX, newY);
 }
