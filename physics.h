@@ -172,7 +172,6 @@ double newtonsFirstLaw(double s0)
 *******************************/
 double motionConstantVelocity(double s0, double v, double t)
 {
-
    return s0 + (v * t);
 }
 

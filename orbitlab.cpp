@@ -1,14 +1,15 @@
 /*************************************************************
  * 1. Name:
- *      Demo
+ *      William Torman and Jenna Ray
  * 2. Assignment Name:
  *      Lab 07: Orbit Simulator
+ *      https://youtu.be/U7ZLDh7L8f0
  * 3. Assignment Description:
  *      Simulate satellites orbiting the earth
  * 4. What was the hardest part? Be as specific as possible.
- *      ??
+ *      We could not figure out how to get the satellite to properly orbit.
  * 5. How long did it take for you to complete the assignment?
- *      ??
+ *      9 Hours
  *****************************************************************/
 
 #include <cassert>      // for ASSERT
@@ -123,7 +124,7 @@ int main(int argc, char** argv)
 #endif // !_WIN32
 {
 
-   testRunner();
+   /*testRunner();*/
 
    // Initialize OpenGL
    Position ptUpperRight;

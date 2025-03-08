@@ -42,7 +42,7 @@ public:
    Sputnik() : Satellite() 
    {
       Position pos(-36515095.13, 21082000.0);
-      Velocity v(2050, 3684.68);
+      Velocity v(2050, 2684.68);
 
       setPosition(pos);
       setVelocity(v);

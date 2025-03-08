@@ -128,7 +128,7 @@ private:
       bool isCollided = false;
       Orbiter orbiter(pos, v, angle, a, isCollided);
 
-      //exercize
+      //exercise
       Orbiter newOrbiter;
       newOrbiter = orbiter;
 
@@ -164,7 +164,7 @@ private:
       Velocity velocity(8.0, 9.0);
       orbiter.velocity = velocity;
 
-      //exercize
+      //exercise
       Velocity result = orbiter.getVelocity();
 
       //verify
@@ -180,7 +180,7 @@ private:
       angle.radians = 8.0;
       orbiter.angle = angle;
 
-      //exercize
+      //exercise
       Angle result = orbiter.getAngle();
 
       //verify
@@ -194,7 +194,7 @@ private:
       Acceleration acceleration(8.0, 9.0);
       orbiter.acceleration = acceleration;
 
-      //exercize
+      //exercise
       Acceleration result = orbiter.getAcceleration();
 
       //verify
@@ -209,7 +209,7 @@ private:
       bool isCollided = true;
       orbiter.isCollided = isCollided;
 
-      //exercize
+      //exercise
       bool result = orbiter.checkIsCollided();
 
       //verify
@@ -223,7 +223,7 @@ private:
       Orbiter orbiter;
       Position position(8.0, 9.0);
 
-      //exercize
+      //exercise
       orbiter.setPosition(position);
 
       //verify
@@ -237,7 +237,7 @@ private:
       Orbiter orbiter;
       Velocity velocity(8.0, 9.0);
 
-      //exercize
+      //exercise
       orbiter.setVelocity(velocity);
 
       //verify
@@ -251,7 +251,7 @@ private:
       Orbiter orbiter;
       Angle angle(8.0);
 
-      //exercize
+      //exercise
       orbiter.setAngle(angle);
 
       //verify
@@ -264,7 +264,7 @@ private:
       Orbiter orbiter;
       Acceleration acceleration(8.0, 9.0);
 
-      //exercize
+      //exercise
       orbiter.setAcceleration(acceleration);
 
       //verify
