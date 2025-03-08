@@ -219,60 +219,74 @@ private:
    //setters
    void testSetters_setPosition()
    {
-      //setup
-      Orbiter orbiter;
-      Position position(8.0, 9.0);
+       //setup
+       Orbiter orbiter;
+       Position position(8.0, 9.0);
 
-      //exercise
-      orbiter.setPosition(position);
+       //exercise
+       orbiter.setPosition(position);
 
-      //verify
-      assertEquals(orbiter.position.x, 8.0);
-      assertEquals(orbiter.position.y, 9.0);
+       //verify
+       assertEquals(orbiter.position.x, 8.0);
+       assertEquals(orbiter.position.y, 9.0);
    }
 
    void testSetters_setVelocity()
    {
-      //setup
-      Orbiter orbiter;
-      Velocity velocity(8.0, 9.0);
+       //setup
+       Orbiter orbiter;
+       Velocity velocity(8.0, 9.0);
 
-      //exercise
-      orbiter.setVelocity(velocity);
+       //exercise
+       orbiter.setVelocity(velocity);
 
-      //verify
-      assertEquals(orbiter.velocity.dx, 8.0);
-      assertEquals(orbiter.velocity.dy, 9.0);
+       //verify
+       assertEquals(orbiter.velocity.dx, 8.0);
+       assertEquals(orbiter.velocity.dy, 9.0);
    }
 
    void testSetters_setAngle()
    {
-      //setup
-      Orbiter orbiter;
-      Angle angle(8.0);
+       //setup
+       Orbiter orbiter;
+       Angle angle(8.0);
 
-      //exercise
-      orbiter.setAngle(angle);
+       //exercise
+       orbiter.setAngle(angle);
 
-      //verify
-      assertEquals(orbiter.angle.radians, 8.0 * M_PI / 180.0);
+       //verify
+       assertEquals(orbiter.angle.radians, 8.0 * M_PI / 180.0);
    }
 
    void testSetters_setAcceleration()
    {
-      //setup
-      Orbiter orbiter;
-      Acceleration acceleration(8.0, 9.0);
+       //setup
+       Orbiter orbiter;
+       Acceleration acceleration(8.0, 9.0);
 
-      //exercise
-      orbiter.setAcceleration(acceleration);
+       //exercise
+       orbiter.setAcceleration(acceleration);
 
-      //verify
-      assertEquals(orbiter.acceleration.ddx, 8.0);
-      assertEquals(orbiter.acceleration.ddy, 9.0);
+       //verify
+       assertEquals(orbiter.acceleration.ddx, 8.0);
+       assertEquals(orbiter.acceleration.ddy, 9.0);
    }
 
-   // move
+   void testMove()
+   {
+       //setup
+       Orbiter orbiter;
+       orbiter.setPosition(Position(5.0, 5.0));
+       orbiter.setVelocity(Velocity(2.0, 3.0));
 
-   // collide
+       //exercise
+       orbiter.move(24);
+
+       //verify
+       assertEquals(orbiter.position.x, 7.0);
+       assertEquals(orbiter.position.y, 8.0);
+   }
+
+   // add collision when collision is required.
+
 };
