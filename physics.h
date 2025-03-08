@@ -229,7 +229,7 @@ double getDistance(double s0, double v, double t, double a)
     a = acceleration (m/s2)
     t = time (s)
 *************************************************/
-double getVelocity(double v0, double a, double t)
+double findVelocity(double v0, double a, double t)
 {
    return v0 + a * t;
 }
@@ -281,7 +281,7 @@ void movePrototype(Position& PTpos, double& angle, double& v, double& t)
    double ddy = getVerticalComponentOfAcceleration(gn, angle);
    
    // figure out velocity
-   double newV = getVelocity(v, angle, t);
+   double newV = findVelocity(v, angle, t);
    v = newV;
    // gonna use these functions bc I'm pretty sure the math should work for velocity to
    double dx = getHorizontalComponentOfAcceleration(newV, angle);
@@ -290,6 +290,6 @@ void movePrototype(Position& PTpos, double& angle, double& v, double& t)
    // figure out new distance maybe is next?
    double newX = getDistanceComponent(x, dx, t, ddx);
    double newY = getDistanceComponent(y, dy, t, ddy);
-   //cout << newX << "," << newY << endl;
+   cout << newX << "," << newY << endl;
    PTpos.setMeters(newX, newY);
 }

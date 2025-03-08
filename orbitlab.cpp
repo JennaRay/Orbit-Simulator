@@ -16,69 +16,8 @@
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "position.h"      // for POINT
 #include "test.h"
-#include "physics.h"
+#include "simulator.h"
 using namespace std;
-
-/*************************************************************************
- * Demo
- * Test structure to capture the LM that will move around the screen
- *************************************************************************/
-class Demo
-{
-public:
-   Demo(Position ptUpperRight) :
-      ptUpperRight(ptUpperRight)
-   {
-      ptHubble.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptHubble.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptSputnik.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptSputnik.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptStarlink.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptStarlink.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptCrewDragon.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptCrewDragon.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptShip.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptShip.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptGPS.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptGPS.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-      ptStar.setPixelsX(ptUpperRight.getPixelsX() * random(-0.5, 0.5));
-      ptStar.setPixelsY(ptUpperRight.getPixelsY() * random(-0.5, 0.5));
-
-
-      //set gps meters for prototype
-      ptGPS.setMeters(0.0, getGeoDistance());
-      t = 1;
-      a = getDirectionOfGravityPull(ptGPS.getMetersX(), ptGPS.getMetersY());
-      v = getVelocity(getGeoSpeed(), a, t);
-      angleShip = 0.0;
-      angleEarth = 0.0;
-      phaseStar = 0;
-   }
-
-   Position ptHubble;
-   Position ptSputnik;
-   Position ptStarlink;
-   Position ptCrewDragon;
-   Position ptShip;
-   Position ptGPS;
-   Position ptStar;
-   Position ptUpperRight;
-
-   unsigned char phaseStar;
-
-   double angleShip;
-   double angleEarth;
-
-   double a;
-   double v;
-   double t;
-};
 
 /*************************************
  * All the interesting work happens here, when
@@ -91,21 +30,21 @@ void callBack(const Interface* pUI, void* p)
 {
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
-   Demo* pDemo = (Demo*)p;
-
+   //Demo* pDemo = (Demo*)p;
+   Simulator* sim = (Simulator*)p;
    //
    // accept input
    //
 
    // move by a little
-   if (pUI->isUp())
+   /*if (pUI->isUp())
       pDemo->ptShip.addPixelsY(1.0);
    if (pUI->isDown())
       pDemo->ptShip.addPixelsY(-1.0);
    if (pUI->isLeft())
       pDemo->ptShip.addPixelsX(-1.0);
    if (pUI->isRight())
-      pDemo->ptShip.addPixelsX(1.0);
+      pDemo->ptShip.addPixelsX(1.0);*/
 
 
    //
@@ -113,13 +52,13 @@ void callBack(const Interface* pUI, void* p)
    //
 
    // rotate the earth
-   pDemo->angleEarth += 0.01;
-   pDemo->angleShip += 0.02;
-   pDemo->phaseStar++;
+   //pDemo->angleEarth += 0.01;
+   //pDemo->angleShip += 0.02;
+   //pDemo->phaseStar++;
 
-   // orbit sattelite prototype
-   movePrototype(pDemo->ptGPS, pDemo->a, pDemo->v, pDemo->t);
-   pDemo->a = pDemo->angleShip;
+   //// orbit sattelite prototype
+   //movePrototype(pDemo->ptGPS, pDemo->a, pDemo->v, pDemo->t);
+   //pDemo->a = pDemo->angleShip;
    //
    // draw everything
    //
@@ -133,7 +72,7 @@ void callBack(const Interface* pUI, void* p)
    //gout.drawSputnik   (pDemo->ptSputnik,    pDemo->angleShip);
    //gout.drawStarlink  (pDemo->ptStarlink,   pDemo->angleShip);
    //gout.drawShip      (pDemo->ptShip,       pDemo->angleShip, pUI->isSpace());
-   gout.drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
+   //gout.drawGPS       (pDemo->ptGPS,        pDemo->angleShip);
 
    // draw parts
    //pt.setPixelsX(pDemo->ptCrewDragon.getPixelsX() + 20);
@@ -158,11 +97,12 @@ void callBack(const Interface* pUI, void* p)
    //gout.drawFragment(pt, pDemo->angleShip);
 
    // draw a single star
-   gout.drawStar(pDemo->ptStar, pDemo->phaseStar);
+   /*gout.drawStar(pDemo->ptStar, pDemo->phaseStar);*/
 
    // draw the earth
-   pt.setMeters(0.0, 0.0);
-   gout.drawEarth(pt, pDemo->angleEarth);
+   /*pt.setMeters(0.0, 0.0);
+   gout.drawEarth(pt, pDemo->angleEarth);*/
+   sim->display(gout);
 }
 
 double Position::metersFromPixels = 40.0;
@@ -190,14 +130,14 @@ int main(int argc, char** argv)
    ptUpperRight.setPixelsX(1000.0);
    ptUpperRight.setPixelsY(1000.0);
    Interface ui(0, NULL,
-      "Demo",   /* name on the window */
+      "Orbit Simulator",   /* name on the window */
       ptUpperRight);
 
-   // Initialize the demo
-   Demo demo(ptUpperRight);
-
+   // Initialize the simulator
+   Simulator sim(ptUpperRight);
    // set everything into action
-   ui.run(callBack, &demo);
+   //ui.run(callBack, &demo);
+   ui.run(callBack, &sim);
 
 
    return 0;

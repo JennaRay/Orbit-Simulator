@@ -24,13 +24,31 @@ public:
    Satellite() : Orbiter() {}
 
    void collide() override {}
-   void draw() override {}
+   void draw(ostream& gout) {}
    void breakApart() {}
 
 private:
 
    //Piece pieces[];
-   Fragment fragments[];
+   //Fragment fragments[]; //this doesn't work with the sub classes hmmm
 };
 
 //specific satellite subclasses
+
+class Sputnik : public Satellite
+{
+public:
+   //Constructors
+   Sputnik() : Satellite() 
+   {
+      Position pos(-36515095.13, 21082000.0);
+      Velocity v(2050, 3684.68);
+
+      setPosition(pos);
+      setVelocity(v);
+   }
+
+   void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getAngle().getRadians()); }
+private:
+   // add fragments
+};

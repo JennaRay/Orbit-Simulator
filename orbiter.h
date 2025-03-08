@@ -14,33 +14,49 @@
 #include "position.h"
 #include "velocity.h"
 #include "acceleration.h"
+#include "uiDraw.h"
 
 using namespace std;
+
+class TestOrbiter;
 
 class Orbiter
 {
 public:
+   friend TestOrbiter;
+
    //Constructors
    Orbiter() : position(Position()), velocity(Velocity()), angle(Angle()), acceleration(Acceleration()), isCollided(false) {}
-   Orbiter(Position position, Velocity velocity, Angle angle, double acceleration, bool isCollided) : position(position), velocity(velocity), angle(angle), acceleration(acceleration), isCollided(isCollided) {}
+   Orbiter(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : position(position), velocity(velocity), angle(angle), acceleration(acceleration), isCollided(isCollided) {}
    Orbiter(const Orbiter& orbiter) : position(orbiter.position), velocity(orbiter.velocity), angle(orbiter.angle), acceleration(orbiter.acceleration), isCollided(orbiter.isCollided) {}
-
+   Orbiter& operator=(const Orbiter& orbiter)
+   {
+      if (this != &orbiter)
+      {
+         position = orbiter.position;
+         velocity = orbiter.velocity;
+         angle = orbiter.angle;
+         acceleration = orbiter.acceleration;
+         isCollided = orbiter.isCollided;
+      }
+      return *this;
+   }
    //Getters
-   Position getPosition() const { return position; }
-   Velocity getVelocity() const { return velocity; }
-   Angle getAngle() const { return angle; }
-   Acceleration getAcceleration() const { return acceleration; }
-   bool checkIsCollided() const { return isCollided; }
+   virtual Position getPosition() const { return position; }
+   virtual Velocity getVelocity() const { return velocity; }
+   virtual Angle getAngle() const { return angle; }
+   virtual Acceleration getAcceleration() const { return acceleration; }
+   virtual bool checkIsCollided() const { return isCollided; }
 
    //Setters
-   void setPosition(Position position) { this->position = position; }
-   void setVelocity(Velocity velocity) { this->velocity = velocity; }
-   void setAngle(Angle angle) { this->angle = angle; }
-   void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
+   virtual void setPosition(Position position) { this->position = position; }
+   virtual void setVelocity(Velocity velocity) { this->velocity = velocity; }
+   virtual void setAngle(Angle angle) { this->angle = angle; }
+   virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
 
-   void move() {}
-   virtual void collide() {}
-   virtual void draw() {}
+   virtual void move();
+   virtual void collide() {};
+   virtual void draw(ogstream& gout) {};
 
 private:
    Position position;
@@ -60,7 +76,7 @@ public:
    Part() : Orbiter() {}
 
    void collide() override {}
-   void draw() override {}
+   void draw(ogstream& gout) {}
 };
 
 //Piece subclass
@@ -72,12 +88,12 @@ public:
    Piece() : Orbiter() {}
 
    void collide() override {}
-   void draw() override {}
+   void draw(ogstream& gout) {}
    void breakApart() {}
 
 private:
 
-   Part parts[];
+   //Part parts[];
 };
 
 //Fragment subclass
@@ -88,8 +104,8 @@ public:
    //Constructors
    Fragment() : Orbiter() {}
 
-   void collide() override {}
-   void draw() override {}
+   void collide()  {}
+   void draw(ogstream& gout) {}
    double kick(Velocity c) {}
    void retire() {}
 private:
