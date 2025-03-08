@@ -54,7 +54,7 @@ public:
    virtual void setAngle(Angle angle) { this->angle = angle; }
    virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
 
-   virtual void move();
+   virtual void move(double time);
    virtual void collide() {};
    virtual void draw(ogstream& gout) {};
 

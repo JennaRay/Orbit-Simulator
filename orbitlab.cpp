@@ -102,6 +102,7 @@ void callBack(const Interface* pUI, void* p)
    // draw the earth
    /*pt.setMeters(0.0, 0.0);
    gout.drawEarth(pt, pDemo->angleEarth);*/
+   sim->moveOrbiters();
    sim->display(gout);
 }
 

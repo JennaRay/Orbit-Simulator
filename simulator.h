@@ -22,15 +22,12 @@ class Simulator
 {
 public:
    //Constructors
-   Simulator(Position UpperRight) : upperRight(UpperRight), angleEarth(Angle(0.0)), earthPos(Position()), time(0)
-   {
-      //sputnik.setPosition(Position(upperRight.getPixelsX() * -36515095.13, upperRight.getPixelsY() * 21082000.0));
-   };
+   Simulator(Position UpperRight) : upperRight(UpperRight), angleEarth(Angle(0.0)), earthPos(Position()), time(24) {}
 
    void display(ogstream& gout);
    void checkCollisions() {}
    void handleCollisions(Orbiter delta) {}
-   void moveOrbiters() {}
+   void moveOrbiters();
    void movePlane() {}
    void rotateEarth() {}
 
@@ -38,7 +35,7 @@ private:
    Angle angleEarth;
    Position earthPos;
    Position upperRight;
-   int time;
+   double time;
    //Spaceplane dreamChaser
    //satellites
    //Orbiter orbiters[]; //maybe we do individual things for now of every satellite

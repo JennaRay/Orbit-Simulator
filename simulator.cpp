@@ -11,3 +11,8 @@ void Simulator::display(ogstream& gout)
 {
    sputnik.draw(gout);
 }
+
+void Simulator::moveOrbiters()
+{
+   sputnik.move(time);
+}
