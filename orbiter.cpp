@@ -32,4 +32,6 @@ void Orbiter::move(double time)
    position.setMetersX(x);
    position.setMetersY(y);
 
+   angle.add(0.02);
+
 }
