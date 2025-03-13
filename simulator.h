@@ -73,4 +73,7 @@ private:
    GPS gps4;
    GPS gps5;
    GPS gps6;
+   Hubble hubble;
+   Dragon dragon;
+   Starlink starlink;
 };

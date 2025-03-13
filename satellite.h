@@ -64,3 +64,50 @@ public:
 private:
    // breaks into 3 pieces and 2 fragments
 };
+
+class Hubble : public Satellite
+{
+public:
+   Hubble() : Satellite()
+   {
+      Position pos(0.0, -42164000.0);
+      Velocity v(3100.0, 0.0);
+
+      setPosition(pos);
+      setVelocity(v);
+   }
+
+   void draw(ogstream& gout) { gout.drawHubble(getPosition(), getAngle().getRadians()); }
+};
+
+class Dragon : public Satellite
+{
+public:
+   Dragon() : Satellite()
+   {
+      Position pos(0.0, 8000000.0);
+      Velocity v(-7900.0, 0.0);
+
+      setPosition(pos);
+      setVelocity(v);
+   }
+
+   void draw(ogstream& gout) { gout.drawCrewDragon(getPosition(), getAngle().getRadians()); }
+private:
+   // breaks into 3 pieces and 2 fragments
+};
+
+class Starlink : public Satellite
+{
+public:
+   Starlink() : Satellite() 
+   {
+      Position pos(0.0, -13020000.0);
+      Velocity v(5800.0, 0.0);
+
+      setPosition(pos);
+      setVelocity(v);
+   }
+
+   void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getAngle().getRadians()); }
+};
