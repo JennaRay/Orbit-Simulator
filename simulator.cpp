@@ -10,9 +10,21 @@
 void Simulator::display(ogstream& gout)
 {
    sputnik.draw(gout);
+   gps1.draw(gout);
+   gps2.draw(gout);
+   gps3.draw(gout);
+   gps4.draw(gout);
+   gps5.draw(gout);
+   gps6.draw(gout);
 }
 
 void Simulator::moveOrbiters()
 {
    sputnik.move(time);
+   gps1.move(time);
+   gps2.move(time);
+   gps3.move(time);
+   gps4.move(time);
+   gps5.move(time);
+   gps6.move(time);
 }

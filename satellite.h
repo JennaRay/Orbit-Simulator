@@ -22,6 +22,7 @@ class Satellite : public Orbiter
 public:
    //Constructors
    Satellite() : Orbiter() {}
+   Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : Orbiter(position, velocity, angle, acceleration, isCollided) {}
 
    void collide() override {}
    void draw(ostream& gout) {}
@@ -51,4 +52,15 @@ public:
    void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getAngle().getRadians()); }
 private:
    // add fragments
+};
+
+class GPS : public Satellite
+{
+public:
+   GPS() : Satellite() {}
+   GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : Satellite(position, velocity, angle, acceleration, isCollided) {}
+
+   void draw(ogstream& gout) { gout.drawGPS(getPosition(), getAngle().getRadians()); }
+private:
+   // breaks into 3 pieces and 2 fragments
 };
