@@ -113,7 +113,7 @@ double getHeightAboveEarth(double x, double y)
 *************************************************/
 double getDirectionOfGravityPull(double x, double y)
 {
-   return atan2(y, x);
+   return atan2(0.0 - x, 0.0 - y);
 }
 
 /*********************************************

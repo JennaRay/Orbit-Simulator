@@ -25,9 +25,10 @@ void Orbiter::move(double time)
 
    // figure out velocity
    double newV = findVelocity(velocity.getSpeed(), objAngleVelocity.getRadians(), secondsPerFrame);
-   //horizontal and vertical components of velocity
+   ////horizontal and vertical components of velocity
    double dx = getHorizontalComponentOfAcceleration(newV, angle.getRadians());
    double dy = getVerticalComponentOfAcceleration(newV, angle.getRadians());
+
    velocity.setDX(dx);
    velocity.setDY(dy);
 
