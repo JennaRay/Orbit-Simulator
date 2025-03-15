@@ -77,6 +77,10 @@ void Orbiter::move(double time)
    velocity.setDY(dy);
 
    //update angle
-   angle.add((atan2(0-dx, 0-dy)));
- 
+   double angularVelocity = (atan2(0 - dx, 0 - dy));
+   angle.add(angularVelocity);
+   if (angularVelocity > 0)
+      spin += angularVelocity * -0.01;
+   else
+      spin += angularVelocity * 0.01;
 }

@@ -56,6 +56,7 @@ public:
    virtual void setVelocity(Velocity velocity) { this->velocity = velocity; }
    virtual void setAngle(Angle angle) { this->angle = angle; }
    virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
+   virtual void setSpin(double delta) { spin = delta; }
 
    virtual void move(double time);
    virtual void collide() {};

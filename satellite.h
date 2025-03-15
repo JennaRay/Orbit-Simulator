@@ -47,6 +47,7 @@ public:
 
       setPosition(pos);
       setVelocity(v);
+      setSpin(atan2(0 - getVelocity().getDX(), 0 - getVelocity().getDY()));
    }
 
    void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getSpin()); }
