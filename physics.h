@@ -97,7 +97,6 @@ double getGravity(double h)
 *************************************************/
 double getHeightAboveEarth(double x, double y)
 {
-   double r = 6378000;
    return sqrt(pow(x, 2) + pow(y, 2)) - r;
 }
 
@@ -111,9 +110,9 @@ double getHeightAboveEarth(double x, double y)
     xs = horizontal position of the satellite in meters
     ys = vertical position of the satellite in meters
 *************************************************/
-double getDirectionOfGravityPull(double x, double y)
+double getDirectionOfGravityPull(double x, double y, double xe, double ye)
 {
-   return atan2(0.0 - x, 0.0 - y);
+   return atan2(xe - x, ye - y);
 }
 
 /*********************************************

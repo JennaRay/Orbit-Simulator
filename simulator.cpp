@@ -9,6 +9,10 @@
 
 void Simulator::display(ogstream& gout)
 {
+   //display earth
+   gout.drawEarth(earthPos, angleEarth.getRadians());
+
+   //display satellites
    sputnik.draw(gout);
    gps1.draw(gout);
    gps2.draw(gout);

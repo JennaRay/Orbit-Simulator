@@ -26,9 +26,9 @@ public:
    friend TestOrbiter;
 
    //Constructors
-   Orbiter() : position(Position()), velocity(Velocity()), angle(Angle()), acceleration(Acceleration()), isCollided(false) {}
-   Orbiter(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : position(position), velocity(velocity), angle(angle), acceleration(acceleration), isCollided(isCollided) {}
-   Orbiter(const Orbiter& orbiter) : position(orbiter.position), velocity(orbiter.velocity), angle(orbiter.angle), acceleration(orbiter.acceleration), isCollided(orbiter.isCollided) {}
+   Orbiter() : position(Position()), velocity(Velocity()), angle(Angle()), acceleration(Acceleration()), isCollided(false), spin(0.0), orbitCenter(Position(0, 0)) { orbitCenter.setMeters(0, 0); }
+   Orbiter(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : position(position), velocity(velocity), angle(angle), acceleration(acceleration), isCollided(isCollided), spin(0.0), orbitCenter(Position(0,0)) {}
+   Orbiter(const Orbiter& orbiter) : position(orbiter.position), velocity(orbiter.velocity), angle(orbiter.angle), acceleration(orbiter.acceleration), isCollided(orbiter.isCollided), spin(orbiter.spin), orbitCenter(orbiter.orbitCenter) {}
    Orbiter& operator=(const Orbiter& orbiter)
    {
       if (this != &orbiter)
@@ -38,6 +38,8 @@ public:
          angle = orbiter.angle;
          acceleration = orbiter.acceleration;
          isCollided = orbiter.isCollided;
+         spin = orbiter.spin;
+         orbitCenter = orbiter.orbitCenter;
       }
       return *this;
    }
@@ -47,6 +49,7 @@ public:
    virtual Angle getAngle() const { return angle; }
    virtual Acceleration getAcceleration() const { return acceleration; }
    virtual bool checkIsCollided() const { return isCollided; }
+   virtual double getSpin() { return spin; }
 
    //Setters
    virtual void setPosition(Position position) { this->position = position; }
@@ -60,9 +63,11 @@ public:
 
 private:
    Position position;
+   Position orbitCenter;
    Velocity velocity;
    Angle angle;
    Acceleration acceleration;
+   double spin;
    bool isCollided;
 };
 

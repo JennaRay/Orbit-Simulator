@@ -49,7 +49,7 @@ public:
       setVelocity(v);
    }
 
-   void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getAngle().getRadians()); }
+   void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getSpin()); }
 private:
    // add fragments
 };
@@ -60,7 +60,7 @@ public:
    GPS() : Satellite() {}
    GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : Satellite(position, velocity, angle, acceleration, isCollided) {}
 
-   void draw(ogstream& gout) { gout.drawGPS(getPosition(), getAngle().getRadians()); }
+   void draw(ogstream& gout) { gout.drawGPS(getPosition(), getSpin()); }
 private:
    // breaks into 3 pieces and 2 fragments
 };
@@ -77,7 +77,7 @@ public:
       setVelocity(v);
    }
 
-   void draw(ogstream& gout) { gout.drawHubble(getPosition(), getAngle().getRadians()); }
+   void draw(ogstream& gout) { gout.drawHubble(getPosition(), getSpin()); }
 };
 
 class Dragon : public Satellite
@@ -92,7 +92,7 @@ public:
       setVelocity(v);
    }
 
-   void draw(ogstream& gout) { gout.drawCrewDragon(getPosition(), getAngle().getRadians()); }
+   void draw(ogstream& gout) { gout.drawCrewDragon(getPosition(), getSpin()); }
 private:
    // breaks into 3 pieces and 2 fragments
 };
@@ -109,5 +109,5 @@ public:
       setVelocity(v);
    }
 
-   void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getAngle().getRadians()); }
+   void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getSpin()); }
 };
