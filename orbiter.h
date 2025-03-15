@@ -53,10 +53,15 @@ public:
 
    //Setters
    virtual void setPosition(Position position) { this->position = position; }
+   virtual void setPosition(double x, double y) { this->position.setMetersX(x); this->position.setMetersY(y); }
    virtual void setVelocity(Velocity velocity) { this->velocity = velocity; }
    virtual void setAngle(Angle angle) { this->angle = angle; }
    virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
    virtual void setSpin(double delta) { spin = delta; }
+
+   virtual void addSpin(double delta) { spin += delta; }
+   virtual void addMetersX(double x) { position.addMetersX(x); }
+   virtual void addMetersY(double y) { position.addMetersY(y); }
 
    virtual void move(double time);
    virtual void collide() {};

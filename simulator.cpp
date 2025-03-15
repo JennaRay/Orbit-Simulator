@@ -6,6 +6,7 @@
 #include "orbiter.h"
 #include "satellite.h"
 #include "simulator.h"
+#include "uiInteract.h"
 
 void Simulator::display(ogstream& gout)
 {
@@ -41,5 +42,17 @@ void Simulator::moveOrbiters()
    dragon.move(time);
    starlink.move(time);
 
-   dreamChaser.move(time);
+   //dreamChaser.move(time);
+}
+
+void Simulator::handleInput(const Interface* pUI)
+{
+   if (pUI->isLeft())
+      dreamChaser.rotate(-0.1);
+   if (pUI->isRight())
+      dreamChaser.rotate(0.1);
+   if (pUI->isDown())
+      dreamChaser.applyThrust();
+   else
+      dreamChaser.stopThrust();
 }

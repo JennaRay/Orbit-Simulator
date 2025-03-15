@@ -16,6 +16,7 @@
 #include "orbiter.h"
 #include "satellite.h"
 #include "spaceplane.h"
+#include "uiInteract.h"
 
 using namespace std;
 
@@ -74,8 +75,9 @@ public:
    void checkCollisions() {}
    void handleCollisions(Orbiter delta) {}
    void moveOrbiters();
-   void movePlane() {}
-   void rotateEarth() { angleEarth.add(0.02); }
+   void movePlane() { dreamChaser.moveForward(); }
+   void rotateEarth() { angleEarth.add(-0.02); }
+   void handleInput(const Interface* pUI);
 
 private:
    Angle angleEarth;
