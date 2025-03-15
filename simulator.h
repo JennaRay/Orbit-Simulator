@@ -15,6 +15,7 @@
 #include "angle.h"
 #include "orbiter.h"
 #include "satellite.h"
+#include "spaceplane.h"
 
 using namespace std;
 
@@ -81,7 +82,7 @@ private:
    Position earthPos;
    Position upperRight;
    double time;
-   //Spaceplane dreamChaser
+   SpacePlane dreamChaser;
    //satellites
    //Orbiter orbiters[]; //maybe we do individual things for now of every satellite
    Sputnik sputnik;

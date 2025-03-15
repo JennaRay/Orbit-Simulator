@@ -23,6 +23,9 @@ void Simulator::display(ogstream& gout)
    hubble.draw(gout);
    dragon.draw(gout);
    starlink.draw(gout);
+
+   //display plane
+   dreamChaser.draw(gout);
 }
 
 void Simulator::moveOrbiters()
@@ -37,4 +40,6 @@ void Simulator::moveOrbiters()
    hubble.move(time);
    dragon.move(time);
    starlink.move(time);
+
+   dreamChaser.move(time);
 }
