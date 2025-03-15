@@ -42,7 +42,7 @@ void Simulator::moveOrbiters()
    dragon.move(time);
    starlink.move(time);
 
-   //dreamChaser.move(time);
+   dreamChaser.move(time);
 }
 
 void Simulator::handleInput(const Interface* pUI)
