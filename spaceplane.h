@@ -27,46 +27,15 @@ public:
       Velocity v(0.0, -2000);
       setPosition(pos);
       setVelocity(v);
-
+      setRadius(10); // radius in pixels
       thrust = 0.0;
    }
 
-   void draw(ogstream& gout)
-   {
-      gout.drawShip(getPosition(), getSpin(), thrust);
-   }
-
-   void rotate(double delta)
-   {
-      addSpin(delta);
-   }
-   void applyThrust()
-   {
-      thrust = THRUST_ACCEL;      
-   }
-   void stopThrust()
-   {
-      thrust = 0.0;
-   }
-   void moveForward()
-   {
-      double a = getSpin();
-      double ax = thrust * sin(a);
-      double ay = thrust * cos(a);
-
-
-      Velocity v = getVelocity();
-      v.setDX(v.getDX() + ax * TIME_STEP);
-      v.setDY(v.getDY() + ay * TIME_STEP);
-
-      Position pos = getPosition();
-      double newX = pos.getMetersX() + v.getDX() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
-      double newY = pos.getMetersY() + v.getDY() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
-
-      setPosition(newX, newY);
-      //cout << getPosition().getMetersX() << endl;
-      //cout << getPosition().getMetersY() << endl;
-   }
+   void draw(ogstream& gout) { gout.drawShip(getPosition(), getSpin(), thrust);}
+   void rotate(double delta)   { addSpin(delta);   }
+   void applyThrust()   { thrust = THRUST_ACCEL;   }
+   void stopThrust()   { thrust = 0.0;   }
+   void moveForward();
 private:
    double thrust;
 };

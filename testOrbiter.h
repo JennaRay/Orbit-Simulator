@@ -78,9 +78,10 @@ private:
       Angle angle(5.0);
       Acceleration acceleration(6.0, 7.0);
       bool isCollided = true;
+      double radius = 10.0;
 
       // exercise
-      Orbiter orbiter(position, velocity, angle, acceleration, isCollided);
+      Orbiter orbiter(position, velocity, angle, acceleration, radius, isCollided);
 
       // verify
       assertEquals(orbiter.position.x, position.x);
@@ -91,6 +92,7 @@ private:
       assertEquals(orbiter.acceleration.ddx, acceleration.ddx);
       assertEquals(orbiter.acceleration.ddy, acceleration.ddy);
       assertEquals(orbiter.isCollided, isCollided);
+      assertEquals(orbiter.radius, radius);
    }
 
    void construct_copy()
@@ -101,8 +103,9 @@ private:
       Angle angle(5.0);
       Acceleration acceleration(6.0, 7.0);
       bool isCollided = true;
+      double radius = 10.0;
 
-      Orbiter orbiter(position, velocity, angle, acceleration, isCollided);
+      Orbiter orbiter(position, velocity, angle, acceleration, radius, isCollided);
 
       // exercise
       Orbiter copyOrbiter(orbiter);
@@ -116,6 +119,7 @@ private:
       assertEquals(copyOrbiter.acceleration.ddx, acceleration.ddx);
       assertEquals(copyOrbiter.acceleration.ddy, acceleration.ddy);
       assertEquals(copyOrbiter.isCollided, isCollided);
+      assertEquals(copyOrbiter.radius, radius);
    }
 
    void operator_equels()
@@ -126,7 +130,8 @@ private:
       Angle angle(5.0);
       Acceleration a(6.0, 7.0);
       bool isCollided = false;
-      Orbiter orbiter(pos, v, angle, a, isCollided);
+      double radius = 10.0;
+      Orbiter orbiter(pos, v, angle, a, radius, isCollided);
 
       //exercise
       Orbiter newOrbiter;
@@ -141,6 +146,7 @@ private:
       assertEquals(newOrbiter.acceleration.ddx, a.ddx);
       assertEquals(newOrbiter.acceleration.ddy, a.ddy);
       assertEquals(newOrbiter.isCollided, isCollided);
+      assertEquals(newOrbiter.radius, radius);
    }
    //getters
    void testGetters_getPosition()

@@ -8,42 +8,10 @@
 
 using namespace std;
 
-//old move function
-//void Orbiter::move(double time)
-//{
-//	Angle objAngle(getDirectionOfGravityPull(position.getMetersX(), position.getMetersY(), orbitCenter.getMetersX(), orbitCenter.getMetersY()));
-//	//Angle objAngleVelocity(getDirectionOfGravityPull(velocity.getDX(), velocity.getDY()));
-//	// Possibly need
-//	/*objAngleVelocity.reverse();*/
-//	objAngle.reverse();
-//	double secondsPerFrame = getTpf(getTd(24, 60), 30);
-//   //pretty sure we need to include update angle and something to do with the acceleration in here.
-//
-//   // figure out acceleration
-//   double gn = getGravity(getHeightAboveEarth(position.getMetersX(), position.getMetersY()));
-//   double ddx = getHorizontalComponentOfAcceleration(gn, objAngle.getRadians());
-//   double ddy = getVerticalComponentOfAcceleration(gn, objAngle.getRadians());
-//
-//   // figure out velocity
-//   double newV = findVelocity(velocity.getSpeed(), gn, secondsPerFrame);
-//   ////horizontal and vertical components of velocity
-//   double dx = getHorizontalComponentOfAcceleration(newV, angle.getRadians());
-//   double dy = getVerticalComponentOfAcceleration(newV, angle.getRadians());
-//
-//   velocity.setDX(dx);
-//   velocity.setDY(dy);
-//
-//   // figure out position
-//   double x = getDistanceComponent(position.getMetersX(), velocity.getDX(), secondsPerFrame, ddx);
-//   double y = getDistanceComponent(position.getMetersY(), velocity.getDY(), secondsPerFrame, ddy);
-//
-//
-//   position.setMetersX(x);
-//   position.setMetersY(y);
-// 
-//   angle.add(0.02);
-//   //spin+= 0.03;
-//}
+/****************************************
+ * ORBITER::MOVE
+ * Move the orbiter based on the current velocity and acceleration
+ *****************************************/
 
 //new move function because it was easier to just rewrite
 void Orbiter::move(double time)
@@ -84,3 +52,14 @@ void Orbiter::move(double time)
    else
       spin += angularVelocity * 0.01;
 }
+
+/****************************************
+ * ORBITER::COLLIDE
+ * set the orbiter to collided (to be overwritten)
+ *****************************************/
+void Orbiter::collide()
+{
+   cout << "Orbiter collided!" << endl;
+   isCollided = true;
+}
+

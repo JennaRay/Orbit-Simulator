@@ -22,7 +22,7 @@ class Satellite : public Orbiter
 public:
    //Constructors
    Satellite() : Orbiter() {}
-   Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : Orbiter(position, velocity, angle, acceleration, isCollided) {}
+   Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Orbiter(position, velocity, angle, acceleration, radius, isCollided) {}
 
    void collide() override {}
    void draw(ostream& gout) {}
@@ -48,6 +48,7 @@ public:
       setPosition(pos);
       setVelocity(v);
       setSpin(atan2(0 - getVelocity().getDX(), 0 - getVelocity().getDY()));
+      setRadius(4); // radius in pixels
    }
 
    void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getSpin()); }
@@ -58,8 +59,8 @@ private:
 class GPS : public Satellite
 {
 public:
-   GPS() : Satellite() {}
-   GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, bool isCollided) : Satellite(position, velocity, angle, acceleration, isCollided) {}
+   GPS() : Satellite() { setRadius(12); }
+   GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Satellite(position, velocity, angle, acceleration, radius, isCollided) {}
 
    void draw(ogstream& gout) { gout.drawGPS(getPosition(), getSpin()); }
 private:
@@ -76,6 +77,7 @@ public:
 
       setPosition(pos);
       setVelocity(v);
+      setRadius(10); // radius in pixels
    }
 
    void draw(ogstream& gout) { gout.drawHubble(getPosition(), getSpin()); }
@@ -91,6 +93,7 @@ public:
 
       setPosition(pos);
       setVelocity(v);
+      setRadius(7); // radius in pixels
    }
 
    void draw(ogstream& gout) { gout.drawCrewDragon(getPosition(), getSpin()); }
@@ -108,6 +111,7 @@ public:
 
       setPosition(pos);
       setVelocity(v);
+      setRadius(6); // radius in pixels
    }
 
    void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getSpin()); }
