@@ -26,14 +26,13 @@ public:
 
    void collide() override {
       setCollide(true);
+      breakApart();
    }
    void draw(ostream& gout) {}
-   void breakApart() {}
+   virtual void breakApart() {}
 
 private:
-
-   //Piece pieces[];
-   //Fragment fragments[]; //this doesn't work with the sub classes hmmm
+   Orbiter parts[5]; // holds all pieces, parts, fragments when satellite breaks apart
 };
 
 //specific satellite subclasses
@@ -54,8 +53,7 @@ public:
    }
 
    void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getSpin()); }
-private:
-   // add fragments
+   void breakApart() override { /* breaks into 4 fragments */ }
 };
 
 class GPS : public Satellite
@@ -65,8 +63,7 @@ public:
    GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Satellite(position, velocity, angle, acceleration, radius, isCollided) {}
 
    void draw(ogstream& gout) { gout.drawGPS(getPosition(), getSpin()); }
-private:
-   // breaks into 3 pieces and 2 fragments
+   void breakApart() override { /*breaks into 3 pieces and 2 fragments*/ }
 };
 
 class Hubble : public Satellite
@@ -83,6 +80,7 @@ public:
    }
 
    void draw(ogstream& gout) { gout.drawHubble(getPosition(), getSpin()); }
+   void breakApart() override {/*breaks into 4 pieces*/ }
 };
 
 class Dragon : public Satellite
@@ -99,8 +97,7 @@ public:
    }
 
    void draw(ogstream& gout) { gout.drawCrewDragon(getPosition(), getSpin()); }
-private:
-   // breaks into 3 pieces and 2 fragments
+   void breakApart() override {   /*breaks into 3 pieces and 2 fragments*/ }
 };
 
 class Starlink : public Satellite
@@ -117,4 +114,5 @@ public:
    }
 
    void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getSpin()); }
+   void breakApart() override {   /*breaks into 2 pieces and 2 fragments*/ }
 };

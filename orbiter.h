@@ -123,10 +123,13 @@ class Fragment : public Orbiter
 {
 public:
    //Constructors
-   Fragment() : Orbiter() {}
+   Fragment(const Orbiter& parent) : Orbiter(parent)
+   {
+      //fragments and parts are placed 4 pixels from their point of creation in the direction of travel. Thus afragment or part created at(700 px, -300 px) traveling at 180°(straight down) will start its life at(700 px, -296 px).
+   }
 
-   void collide()  {}
-   void draw(ogstream& gout) {}
+   void collide() {}
+   void draw(ogstream& gout) { gout.drawFragment(getPosition(), getAngle().getRadians()); }
    double kick(Velocity c) {}
    void retire() {}
 private:
