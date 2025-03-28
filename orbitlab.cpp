@@ -43,6 +43,9 @@ void callBack(const Interface* pUI, void* p)
    sim->moveOrbiters();
    sim->rotateEarth();
 
+   //check for collisions
+   sim->checkCollisions();
+
    //accept input and move ship based on it
    sim->handleInput(pUI);
    sim->movePlane();

@@ -59,7 +59,6 @@ void Orbiter::move(double time)
  *****************************************/
 void Orbiter::collide()
 {
-   cout << "Orbiter collided!" << endl;
    isCollided = true;
 }
 

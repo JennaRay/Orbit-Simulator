@@ -19,11 +19,15 @@
 using namespace std;
 
 class TestOrbiter;
+class TestSpacePlane;
+class TestSimulator;
 
 class Orbiter
 {
 public:
    friend TestOrbiter;
+   friend TestSpacePlane;
+   friend TestSimulator;
 
    //Constructors
    Orbiter() : position(Position()), velocity(Velocity()), angle(Angle()), acceleration(Acceleration()), isCollided(false), spin(0.0), orbitCenter(Position(0, 0)), radius(0.0) { orbitCenter.setMeters(0, 0); }
@@ -62,6 +66,7 @@ public:
    virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
    virtual void setSpin(double delta) { spin = delta; }
    virtual void setRadius(double radius) { this->radius = radius; }
+   virtual void setCollide(bool isCollided) { this->isCollided = isCollided; }
 
    virtual void addSpin(double delta) { spin += delta; }
    virtual void addMetersX(double x) { position.addMetersX(x); }

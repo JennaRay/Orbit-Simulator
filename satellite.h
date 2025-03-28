@@ -24,7 +24,9 @@ public:
    Satellite() : Orbiter() {}
    Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Orbiter(position, velocity, angle, acceleration, radius, isCollided) {}
 
-   void collide() override {}
+   void collide() override {
+      setCollide(true);
+   }
    void draw(ostream& gout) {}
    void breakApart() {}
 

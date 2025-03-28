@@ -6,6 +6,7 @@
 #include "angle.h"
 #include "uiDraw.h"
 #include <cmath>
+#include "testSpacePlane.h"
 
 
 #define ROTATION_AMOUNT 0.1
@@ -14,11 +15,14 @@
 
 using namespace std;
 
-
+class TestSpacePlane;
 
 class SpacePlane : public Orbiter
 {
 public:
+   friend TestSpacePlane;
+
+   //Constructors
    SpacePlane() : Orbiter()
    {
       Position pos;

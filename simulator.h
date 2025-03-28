@@ -20,9 +20,12 @@
 
 using namespace std;
 
+class TestSimulator;
+
 class Simulator
 {
 public:
+   friend TestSimulator;
    //Constructors
    Simulator(Position UpperRight) : upperRight(UpperRight), angleEarth(Angle(0.0)), earthPos(Position()), time(24) 
    {
