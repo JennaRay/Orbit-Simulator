@@ -5,7 +5,9 @@
 #include "position.h"
 #include "angle.h"
 #include "uiDraw.h"
+#include "bullet.h"
 #include <cmath>
+#include <vector> // to store bullets
 
 
 #define ROTATION_AMOUNT 0.1
@@ -39,6 +41,12 @@ public:
    void applyThrust()   { thrust = THRUST_ACCEL;   }
    void stopThrust()   { thrust = 0.0;   }
    void moveForward();
+   // bullet mechanics
+   void shootBullets() { bullets.push_back(Bullet(*this)); }
+   void moveBullets(double time);
+   void drawBullets(ogstream& gout);
+
 private:
    double thrust;
+   vector<Bullet> bullets;
 };

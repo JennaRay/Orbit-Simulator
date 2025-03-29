@@ -23,5 +23,10 @@ void SpacePlane::moveForward()
    double newX = pos.getMetersX() + v.getDX() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
    double newY = pos.getMetersY() + v.getDY() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
 
+   /*******************************
+   * DRAW BULLETS
+   * Draw all bullets on the screen
+   *******************************/
+
    setPosition(newX, newY);
 }

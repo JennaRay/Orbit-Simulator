@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="acceleration.h" />
     <ClInclude Include="angle.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="demo.h" />
     <ClInclude Include="orbiter.h" />
     <ClInclude Include="physics.h" />
