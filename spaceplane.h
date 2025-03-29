@@ -37,13 +37,14 @@ public:
    }
 
    void draw(ogstream& gout) { gout.drawShip(getPosition(), getSpin(), thrust);}
+   void drawBullet(ogstream& gout);
    void rotate(double delta)   { addSpin(delta);   }
    void applyThrust()   { thrust = THRUST_ACCEL;   }
    void stopThrust()   { thrust = 0.0;   }
    void moveForward();
    // bullet mechanics
-   void shootBullets() { bullets.push_back(Bullet(*this)); }
-   void moveBullets(double time);
+   void shootBullet() { bullets.push_back(Bullet(*this)); } // .push_back adds element to end of vector
+   void moveBullet(double time);
    void drawBullets(ogstream& gout);
 
 private:

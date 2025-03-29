@@ -18,7 +18,7 @@ public:
 		setPosition(pos);
 		setVelocity(v);
 		setAngle(parent.getAngle());
-		setRadius(2); // set the bullet radius to 2 pixels so that it can collide (like spaceplane)
+		setRadius(200); // set the bullet radius to 2 pixels so that it can collide (like spaceplane)
 		expireTime = 0;
 	}
 

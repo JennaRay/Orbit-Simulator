@@ -104,5 +104,4 @@ private:
    Position upperRight;
    double time;
    SpacePlane dreamChaser;
-
 };

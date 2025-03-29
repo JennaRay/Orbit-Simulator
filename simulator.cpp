@@ -26,6 +26,8 @@ void Simulator::display(ogstream& gout)
 
    //display plane
    dreamChaser.draw(gout);
+   // draw bullets
+   dreamChaser.drawBullet(gout);
 }
 
 /****************************************************************
@@ -71,7 +73,7 @@ void Simulator::checkCollisions()
 }
 
 
-/**8****************************************
+/*********************************************
 *MOVE ORBITERS
 * Move all of the things orbiting the earth (satellites, pieces, plane)
 **********************************************/
@@ -90,6 +92,8 @@ void Simulator::moveOrbiters()
    }
    //move dreamChaser
    dreamChaser.move(time);
+   // move bullets
+   dreamChaser.moveBullet(time);
 }
 
 /***********************************************
@@ -98,6 +102,7 @@ void Simulator::moveOrbiters()
 ************************************************/
 void Simulator::handleInput(const Interface* pUI)
 {
+    // Movement
    if (pUI->isLeft())
       dreamChaser.rotate(-0.1);
    if (pUI->isRight())
@@ -106,4 +111,8 @@ void Simulator::handleInput(const Interface* pUI)
       dreamChaser.applyThrust();
    else
       dreamChaser.stopThrust();
+
+   // Fire bullets
+   if (pUI->isSpace())
+       dreamChaser.shootBullet();
 }

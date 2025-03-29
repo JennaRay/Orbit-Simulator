@@ -23,10 +23,40 @@ void SpacePlane::moveForward()
    double newX = pos.getMetersX() + v.getDX() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
    double newY = pos.getMetersY() + v.getDY() * TIME_STEP + 0.5 * thrust * pow(TIME_STEP, 2);
 
-   /*******************************
-   * DRAW BULLETS
-   * Draw all bullets on the screen
-   *******************************/
-
    setPosition(newX, newY);
+}
+
+/*******************************
+* Move BULLETS
+* Move all bullets on the screen
+*******************************/
+void SpacePlane::moveBullet(double time) {
+	// .begin() is the 1st element in the vector and .end() is last
+	for (auto it = bullets.begin(); it != bullets.end();) {
+		it->move(time);
+		if (it->checkIsCollided()) // check collision
+			it = bullets.erase(it); // if collided, erase
+		else
+			++it; // move bullet
+	}
+}
+
+/*************************************
+* DRAW BULLETS
+* Draw all bullets on the screen
+****************************************/
+void SpacePlane::drawBullets(ogstream& gout)
+{
+	for (auto& bullet : bullets)
+		bullet.draw(gout);
+}
+
+/*************************************
+* DRAW BULLET
+* Draw a single bullet on the screen
+****************************************/
+void SpacePlane::drawBullet(ogstream& gout)
+{
+	for (auto& bullet : bullets)
+		bullet.draw(gout);
 }
