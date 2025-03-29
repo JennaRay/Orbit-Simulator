@@ -13,12 +13,31 @@
  *****************************************************************/
 
 #include <cassert>      // for ASSERT
+#include <vector>
 #include "uiInteract.h" // for INTERFACE
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "position.h"      // for POINT
 #include "test.h"
 #include "simulator.h"
 using namespace std;
+
+// Star properties
+struct Star {
+    Position pos;
+    unsigned char phase;
+};
+
+std::vector<Star> stars;
+
+void initStars(int numStars) {
+    stars.resize(numStars);
+    for (auto& star : stars) {
+        star.pos.setPixelsX(random(0, 1000));
+        star.pos.setPixelsY(random(0, 1000));
+        star.phase = random(0, 256);
+    }
+}
+
 
 /*************************************
  * All the interesting work happens here, when
@@ -38,6 +57,10 @@ void callBack(const Interface* pUI, void* p)
    ogstream gout(pt);
 
    //do stuff for stars
+   for (auto& star : stars) {
+       star.phase += random(1, 20); // twinkling effect
+       gout.drawStar(star.pos, star.phase);
+   }
 
    //move things in orbit
    sim->moveOrbiters();
@@ -83,6 +106,10 @@ int main(int argc, char** argv)
 
    // Initialize the simulator
    Simulator sim(ptUpperRight);
+
+   // Initialize stars
+   initStars(100);
+
    // set everything into action
    //ui.run(callBack, &demo);
    ui.run(callBack, &sim);
