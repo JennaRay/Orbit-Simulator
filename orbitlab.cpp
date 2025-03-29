@@ -32,8 +32,8 @@ std::vector<Star> stars;
 void initStars(int numStars) {
     stars.resize(numStars);
     for (auto& star : stars) {
-        star.pos.setPixelsX(random(0, 1000));
-        star.pos.setPixelsY(random(0, 1000));
+        star.pos.setPixelsX(random(-500, 500));
+        star.pos.setPixelsY(random(-500, 500));
         star.phase = random(0, 256);
     }
 }
