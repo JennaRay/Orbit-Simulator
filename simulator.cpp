@@ -37,29 +37,49 @@ void Simulator::checkCollisions()
    //check if the plane has collided with any of the orbiters
    for (int i = 0; i < 10; i++)
    {
-      if (computeDistance(dreamChaser.getPosition(), orbiters[i]->getPosition()) < (dreamChaser.getRadiusMeters() + orbiters[i]->getRadiusMeters()))
+      if (orbiters[i]->checkIsCollided())
+         continue; // skip if the orbiter is already collided
+         //will change to individual parts later
+      else
       {
-         orbiters[i]->collide();
-         dreamChaser.collide();
+         if (computeDistance(dreamChaser.getPosition(), orbiters[i]->getPosition()) < (dreamChaser.getRadiusMeters() + orbiters[i]->getRadiusMeters()))
+         {
+            orbiters[i]->collide();
+            dreamChaser.collide();
+         }
       }
    }
 
    //check if any of the orbiters have collided with each other
    for (int i = 0; i < 10; i++)
-   {
-      for (int j = i + 1; j < 10; j++)
+   { //check if the orbiter is collided (whole or split into parts)
+      if (orbiters[i]->checkIsCollided())
+         continue; // skip if the orbiter is already collided
+      //will change to individual parts later
+      else
       {
-         if (i != j) // avoid self-collision check
+         for (int j = i + 1; j < 10; j++)
          {
-            //check if the two orbiters have collided
-            if (computeDistance(orbiters[i]->getPosition(), orbiters[j]->getPosition()) < (orbiters[i]->getRadiusMeters() + orbiters[j]->getRadiusMeters()))
+            if (i != j) // avoid self-collision check
             {
-               orbiters[i]->collide();
-               orbiters[j]->collide();
+               // check if j is split into parts
+               if (orbiters[j]->checkIsCollided())
+                  continue; // skip if the orbiter is already collided
+               //will change to individual parts later   
+               else
+               {
+                  //check if the two orbiters have collided
+                  if (computeDistance(orbiters[i]->getPosition(), orbiters[j]->getPosition()) < (orbiters[i]->getRadiusMeters() + orbiters[j]->getRadiusMeters()))
+                  {
+                     orbiters[i]->collide();
+                     orbiters[j]->collide();
+                  }
+               }
             }
          }
       }
    }
+  
 }
 
 

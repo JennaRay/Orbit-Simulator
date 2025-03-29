@@ -73,6 +73,6 @@ void Fragment::kick()
    setVelocity(v);
       //update position
    double newX = getDistance(getPosition().getPixelsX(), v.getDX(), 0.004, 0.0);
-   double newY = getDistance(getPosition().getPixelsY(), v.getDY(), 0.004, 90.0);
+   double newY = getDistance(getPosition().getPixelsY(), v.getDY(), 0.004, 0.0);
    setPositionPixels(newX, newY);
 }
