@@ -33,7 +33,7 @@ void SpacePlane::moveForward()
 void SpacePlane::moveBullet(double time) {
 	// .begin() is the 1st element in the vector and .end() is last
 	for (auto it = bullets.begin(); it != bullets.end();) {
-		it->move(time);
+		it->moveForward(time);
 		if (it->checkIsCollided()) // check collision
 			it = bullets.erase(it); // if collided, erase
 		else
