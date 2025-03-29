@@ -89,6 +89,7 @@ private:
    double spin;
    bool isCollided;
    double radius; //in pixels, not meters
+
 };
 
 
