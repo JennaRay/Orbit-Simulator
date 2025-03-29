@@ -149,7 +149,6 @@
     <ClCompile Include="simulator.cpp" />
     <ClCompile Include="spaceplane.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="testSpacePlane.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
     <ClCompile Include="velocity.cpp" />
