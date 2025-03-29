@@ -72,6 +72,12 @@ void Simulator::moveOrbiters()
    //move orbiters
    for (int i = 0; i < 10; i++)
    {
+      //check if the orbiter is collided (whole or split into parts)
+      if (orbiters[i]->checkIsCollided())
+      {
+         orbiters[i]->moveParts(time);
+      }
+      else
          orbiters[i]->move(time);
    }
    //move dreamChaser

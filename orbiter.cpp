@@ -1,8 +1,4 @@
 #include <iostream>
-#include "angle.h"
-#include "position.h"
-#include "velocity.h"
-#include "acceleration.h"
 #include "orbiter.h"
 #include "physics.h"
 
@@ -62,3 +58,21 @@ void Orbiter::collide()
    isCollided = true;
 }
 
+//Fragment class
+
+void Fragment::kick()
+{
+   //random angle between 0 and 360
+   Angle newAngle(random(-180, 180));
+   setAngle(newAngle);
+   //add random velocity to speed between 5000 and 9000 m/s
+   double newSpeed = random(5000, 9000);
+   Velocity v = getVelocity();
+   v.addDX(newSpeed);
+   v.addDY(newSpeed);
+   setVelocity(v);
+      //update position
+   double newX = getDistance(getPosition().getPixelsX(), getVelocity().getDX(), 0.004, 0.0);
+   double newY = getDistance(getPosition().getPixelsY(), getVelocity().getDY(), 0.004, 90.0);
+   setPositionPixels(newX, newY);
+}

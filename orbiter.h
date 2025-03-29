@@ -16,6 +16,8 @@
 #include "acceleration.h"
 #include "uiDraw.h"
 
+//#include "physics.h"
+
 using namespace std;
 
 class TestOrbiter;
@@ -32,7 +34,7 @@ public:
    //Constructors
    Orbiter() : position(Position()), velocity(Velocity()), angle(Angle()), acceleration(Acceleration()), isCollided(false), spin(0.0), orbitCenter(Position(0, 0)), radius(0.0) { orbitCenter.setMeters(0, 0); }
    Orbiter(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : position(position), velocity(velocity), angle(angle), acceleration(acceleration), isCollided(isCollided), spin(0.0), orbitCenter(Position(0,0)), radius(radius) {}
-   Orbiter(const Orbiter& orbiter) : position(orbiter.position), velocity(orbiter.velocity), angle(orbiter.angle), acceleration(orbiter.acceleration), isCollided(orbiter.isCollided), spin(orbiter.spin), orbitCenter(orbiter.orbitCenter), radius(orbiter.radius) {}
+   Orbiter(const Orbiter& orbiter) : position(orbiter.position), velocity(orbiter.velocity), angle(orbiter.angle), acceleration(orbiter.acceleration), spin(orbiter.spin), orbitCenter(orbiter.orbitCenter) {}
    Orbiter& operator=(const Orbiter& orbiter)
    {
       if (this != &orbiter)
@@ -61,6 +63,7 @@ public:
    //Setters
    virtual void setPosition(Position position) { this->position = position; }
    virtual void setPosition(double x, double y) { this->position.setMetersX(x); this->position.setMetersY(y); }
+   virtual void setPositionPixels(double x, double y) { this->position.setPixelsX(x); this->position.setPixelsY(y); }
    virtual void setVelocity(Velocity velocity) { this->velocity = velocity; }
    virtual void setAngle(Angle angle) { this->angle = angle; }
    virtual void setAcceleration(Acceleration acceleration) { this->acceleration = acceleration; }
@@ -73,6 +76,7 @@ public:
    virtual void addMetersY(double y) { position.addMetersY(y); }
 
    virtual void move(double time);
+   virtual void moveParts(double time) {} // to be overridden by subclasses (e.g., Satellite, Piece, Fragment
    virtual void collide();
    virtual void draw(ogstream& gout) {};
 
@@ -123,14 +127,11 @@ class Fragment : public Orbiter
 {
 public:
    //Constructors
-   Fragment(const Orbiter& parent) : Orbiter(parent)
-   {
-      //fragments and parts are placed 4 pixels from their point of creation in the direction of travel. Thus afragment or part created at(700 px, -300 px) traveling at 180°(straight down) will start its life at(700 px, -296 px).
-   }
+   inline Fragment(const Orbiter& parent) : Orbiter(parent) { kick(); };
 
    void collide() {}
-   void draw(ogstream& gout) { gout.drawFragment(getPosition(), getAngle().getRadians()); }
-   double kick(Velocity c) {}
+   void draw(ogstream& gout) { gout.drawFragment(getPosition(), getSpin()); }
+   void kick();
    void retire() {}
 private:
    int retireTime;

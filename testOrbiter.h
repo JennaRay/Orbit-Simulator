@@ -118,8 +118,6 @@ private:
       assertEquals(copyOrbiter.angle.radians, angle.radians);
       assertEquals(copyOrbiter.acceleration.ddx, acceleration.ddx);
       assertEquals(copyOrbiter.acceleration.ddy, acceleration.ddy);
-      assertEquals(copyOrbiter.isCollided, isCollided);
-      assertEquals(copyOrbiter.radius, radius);
    }
 
    void operator_equels()

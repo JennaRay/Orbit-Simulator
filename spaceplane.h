@@ -6,7 +6,6 @@
 #include "angle.h"
 #include "uiDraw.h"
 #include <cmath>
-#include "testSpacePlane.h"
 
 
 #define ROTATION_AMOUNT 0.1

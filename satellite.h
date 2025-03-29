@@ -24,15 +24,18 @@ public:
    Satellite() : Orbiter() {}
    Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Orbiter(position, velocity, angle, acceleration, radius, isCollided) {}
 
+   Orbiter* getParts() { return *parts; } // returns the array of parts
+
    void collide() override {
       setCollide(true);
       breakApart();
    }
    void draw(ostream& gout) {}
    virtual void breakApart() {}
+   virtual void moveParts(double time) {};
 
 private:
-   Orbiter parts[5]; // holds all pieces, parts, fragments when satellite breaks apart
+   Orbiter* parts[5]; // holds all pieces, parts, fragments when satellite breaks apart
 };
 
 //specific satellite subclasses
@@ -52,8 +55,16 @@ public:
       setRadius(4); // radius in pixels
    }
 
-   void draw(ogstream& gout) { gout.drawSputnik(getPosition(), getSpin()); }
-   void breakApart() override { /* breaks into 4 fragments */ }
+   void draw(ogstream& gout);
+   void breakApart() override;
+   void moveParts(double time) override
+   {
+      for (int i = 0; i < 4; i++) // move all parts of the satellite
+         if (parts[i] != nullptr) // check if part exists
+            parts[i]->move(time);
+   }
+private:
+   Orbiter* parts[4]; // holds all pieces, parts, fragments when sputnik breaks apart
 };
 
 class GPS : public Satellite
