@@ -12,8 +12,8 @@ public:
 		// Set the position and velocity
 		pos.addPixelsX(20 * sin(parent.getSpin()));
 		pos.addPixelsY(20 * cos(parent.getSpin()));
-		v.addDX(1000 * sin(parent.getSpin()));
-		v.addDY(1000 * cos(parent.getSpin()));
+		v.addDX(9000 * sin(parent.getSpin()));
+		v.addDY(9000 * cos(parent.getSpin()));
 
 		setPosition(pos);
 		setVelocity(v);
@@ -21,6 +21,7 @@ public:
 		setAngle(newAngle);
 		setRadius(2); // set the bullet radius to 2 pixels so that it can collide (like spaceplane)
 		expireTime = 100;
+      setCollide(false);
 	}
 
 	void moveForward(double time) {
@@ -32,8 +33,8 @@ public:
 		setPosition(newX, newY);
 
 		//expireTime--;
-		if (expireTime <= 0)
-			setCollide(true);
+		/*if (expireTime <= 0)
+			setCollide(true);*/
 
 	}
 
