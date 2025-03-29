@@ -105,21 +105,21 @@ public:
 };
 
 //Piece subclass
-
-class Piece : public Orbiter
-{
-public:
-   //Constructors
-   Piece() : Orbiter() {}
-
-   void collide() override {}
-   void draw(ogstream& gout) {}
-   void breakApart() {}
-
-private:
-
-   //Part parts[];
-};
+//Changing to satellite sublcass
+//class Piece : public Orbiter
+//{
+//public:
+//   //Constructors
+//   Piece() : Orbiter() {}
+//
+//   void collide() override {}
+//   void draw(ogstream& gout) {}
+//   void breakApart() {}
+//
+//private:
+//
+//   //Part parts[];
+//};
 
 //Fragment subclass
 

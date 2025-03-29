@@ -14,6 +14,7 @@
 #include "position.h"
 #include "velocity.h"
 #include "orbiter.h"
+#include <functional>
 
 using namespace std;
 
@@ -73,8 +74,10 @@ public:
    GPS() : Satellite() { setRadius(12); }
    GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Satellite(position, velocity, angle, acceleration, radius, isCollided) {}
 
-   void draw(ogstream& gout) { gout.drawGPS(getPosition(), getSpin()); }
-   void breakApart() override { /*breaks into 3 pieces and 2 fragments*/ }
+   void draw(ogstream& gout);
+   void breakApart() override;
+private:
+   Orbiter* parts[3]; // holds all pieces, parts, fragments when GPS breaks apart
 };
 
 class Hubble : public Satellite
@@ -126,4 +129,133 @@ public:
 
    void draw(ogstream& gout) { gout.drawStarlink(getPosition(), getSpin()); }
    void breakApart() override {   /*breaks into 2 pieces and 2 fragments*/ }
+};
+
+class GiantPiece : public Satellite
+{
+public:
+   GiantPiece(Orbiter& parent, double radius) : Satellite(parent.getPosition(), parent.getVelocity(), parent.getAngle(), parent.getAcceleration(), radius, false) {};
+
+   void draw(ogstream& gout) {};
+   void breakApart() override;
+private:
+   Orbiter* parts[4]; //  fragments when GPS center breaks apart
+};
+
+class BigPiece : public Satellite
+{
+public:
+   BigPiece(Orbiter& parent, double radius) : Satellite(parent.getPosition(), parent.getVelocity(), parent.getAngle(), parent.getAcceleration(), radius, false) {};
+
+   void draw(ogstream& gout) {};
+   void breakApart() override;
+private:
+   Orbiter* parts[3]; //  fragments when GPS center breaks apart
+};
+
+class GPSCenter : public BigPiece
+{
+public:
+   GPSCenter(Orbiter& parent) : BigPiece(parent, 7) {};
+
+   void draw(ogstream& gout) override { gout.drawGPSCenter(getPosition(), getSpin()); }
+};
+
+class GPSLeft : public BigPiece
+{
+public:
+   GPSLeft(Orbiter& parent) : BigPiece(parent, 8) {};
+
+   void draw(ogstream& gout) override { gout.drawGPSLeft(getPosition(), getSpin()); }
+};
+
+class GPSRight : public BigPiece
+{
+public:
+   GPSRight(Orbiter& parent) : BigPiece(parent, 8) {};
+
+   void draw(ogstream& gout) override { gout.drawGPSRight(getPosition(), getSpin()); }
+};
+
+class SmallPiece : public Satellite
+{
+public:
+   SmallPiece(Orbiter& parent, double radius) : Satellite(parent.getPosition(), parent.getVelocity(), parent.getAngle(), parent.getAcceleration(), radius, false) {};
+
+   void draw(ogstream& gout) {};
+   void breakApart() override;
+private:
+   Orbiter* parts[2]; //  fragments when GPS center breaks apart
+};
+
+class HubbleTelescope : public BigPiece
+{
+public:
+   HubbleTelescope(Orbiter& parent) : BigPiece(parent, 10) {};
+
+   void draw(ogstream& gout) override { gout.drawHubbleTelescope(getPosition(), getSpin()); }
+};
+
+class HubbleComputer : public SmallPiece
+{
+public:
+   HubbleComputer(Orbiter& parent) : SmallPiece(parent, 7) {};
+
+   void draw(ogstream& gout) override { gout.drawHubbleComputer(getPosition(), getSpin()); }
+};
+
+class HubbleLeft : public SmallPiece
+{
+public:
+   HubbleLeft(Orbiter& parent) : SmallPiece(parent, 8) {};
+
+   void draw(ogstream& gout) override { gout.drawHubbleLeft(getPosition(), getSpin()); }
+};
+
+class HubbleRight : public SmallPiece
+{
+public:
+   HubbleRight(Orbiter& parent) : SmallPiece(parent, 8) {};
+
+   void draw(ogstream& gout) override { gout.drawHubbleRight(getPosition(), getSpin()); }
+};
+
+class DragonCenter : public GiantPiece
+{
+public:
+   DragonCenter(Orbiter& parent) : GiantPiece(parent, 6) {};
+
+   void draw(ogstream& gout) override { gout.drawCrewDragonCenter(getPosition(), getSpin()); }
+};
+
+class DragonLeft : public SmallPiece
+{
+public:
+   DragonLeft(Orbiter& parent) : SmallPiece(parent, 6) {};
+
+   void draw(ogstream& gout) override { gout.drawCrewDragonLeft(getPosition(), getSpin()); }
+};
+
+class DragonRight : public SmallPiece
+{
+public:
+   DragonRight(Orbiter& parent) : SmallPiece(parent, 6) {};
+
+   void draw(ogstream& gout) override { gout.drawCrewDragonRight(getPosition(), getSpin()); }
+};
+
+class StarlinkBody : public BigPiece
+{
+public:
+   StarlinkBody(Orbiter& parent) : BigPiece(parent, 2) {};
+
+   void draw(ogstream& gout) override { gout.drawStarlinkBody(getPosition(), getSpin()); }
+};
+
+class StarlinkArray : public BigPiece
+{
+public:
+   StarlinkArray(Orbiter& parent) : BigPiece(parent, 4) {};
+
+   void draw(ogstream& gout) override { gout.drawStarlinkArray(getPosition(), getSpin()); }
 };
