@@ -38,8 +38,7 @@ void Simulator::checkCollisions()
    for (int i = 0; i < 10; i++)
    {
       if (orbiters[i]->checkIsCollided())
-         continue; // skip if the orbiter is already collided
-         //will change to individual parts later
+         orbiters[i]->checkPartsCollisions(dreamChaser); // check if the plane has collided with the parts of the orbiter
       else
       {
          if (computeDistance(dreamChaser.getPosition(), orbiters[i]->getPosition()) < (dreamChaser.getRadiusMeters() + orbiters[i]->getRadiusMeters()))
@@ -47,17 +46,6 @@ void Simulator::checkCollisions()
             orbiters[i]->collide();
             dreamChaser.collide();
          }
-      }
-   }
-
-   //check if any of the orbiters have collided with each other
-   for (int i = 0; i < 10; i++)
-   { //check if the orbiter is collided (whole or split into parts)
-      if (orbiters[i]->checkIsCollided())
-         continue; // skip if the orbiter is already collided
-      //will change to individual parts later
-      else
-      {
          for (int j = i + 1; j < 10; j++)
          {
             if (i != j) // avoid self-collision check

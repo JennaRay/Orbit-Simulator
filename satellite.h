@@ -32,9 +32,11 @@ public:
    void draw(ostream& gout) {}
    virtual void breakApart() {}
    virtual void moveParts(double time) {};
+   virtual void checkPartsCollisions(Orbiter& orbiter) {}; // override in subclasses
 
 private:
    Orbiter* parts[5]; // holds all pieces, parts, fragments when satellite breaks apart
+   int arraySize = 5;
 };
 
 //specific satellite subclasses
@@ -57,6 +59,7 @@ public:
    void draw(ogstream& gout);
    void breakApart() override;
    void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
    Orbiter* parts[4]; // holds all pieces, parts, fragments when sputnik breaks apart
    int arraySize = 4;
@@ -71,6 +74,7 @@ public:
    void draw(ogstream& gout);
    void breakApart() override;
    void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
    Orbiter* parts[3]; // holds all pieces, parts, fragments when GPS breaks apart
    int arraySize = 3;
@@ -92,6 +96,7 @@ public:
    void draw(ogstream& gout);
    void breakApart() override;
    void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
    Orbiter* parts[4]; // breaks into 4 pieces
    int arraySize = 4;
@@ -113,6 +118,7 @@ public:
    void draw(ogstream& gout);
    void breakApart() override;
    void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
    Orbiter* parts[5]; // breaks into 3 pieces and 2 fragments
    int arraySize = 5;
@@ -134,6 +140,7 @@ public:
    void draw(ogstream& gout);
    void breakApart() override;
    void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
    Orbiter* parts[4]; // breaks into 2 pieces and 2 fragments
    int arraySize = 4;
@@ -146,142 +153,288 @@ public:
 
    virtual void draw(ogstream& gout) {}; // to be overidden
    virtual void breakApart() {}; // to be overidden
+   virtual void moveParts(double time) {};
+   virtual void checkPartsCollisions(Orbiter& orbiter) {};
    void kick();
 private:
 };
-//GiantPiece breaks into 4 parts
-class GiantPiece : public Piece
+/*ALL the individual piece classes just need draw functions*/
+//GPS pieces
+class GPSCenter : public Piece
 {
 public:
-   GiantPiece(Orbiter& parent, double radius) : Piece(parent, radius) {};
-   virtual void draw(ogstream& gout) {};
-   void breakApart() override;
-private:
-   Orbiter* parts[4]; //  fragments when GPS center breaks apart
-   int arraySize = 4;
-};
-//BigPiece breaks into 3 parts
-class BigPiece : public Piece
-{
-public:
-   BigPiece(Orbiter& parent, double radius) : Piece(parent, radius) {};
+   GPSCenter(Orbiter& parent) : Piece(parent, 7) {};
 
-   void draw(ogstream& gout) {};
+   void draw(ogstream& gout) override 
+   { 
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawGPSCenter(getPosition(), getSpin()); 
+   }
    void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
-   Orbiter* parts[3]; //  fragments when GPS center breaks apart
+   Orbiter* parts[3];
    int arraySize = 3;
 };
 
-//SmallPiece breaks into 2 parts
-class SmallPiece : public Satellite
+class GPSLeft : public Piece
 {
 public:
-   SmallPiece(Orbiter& parent, double radius) : Satellite(parent.getPosition(), parent.getVelocity(), parent.getAngle(), parent.getAcceleration(), radius, false) {};
+   GPSLeft(Orbiter& parent) : Piece(parent, 8) {};
 
-   void draw(ogstream& gout) {};
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawGPSLeft(getPosition(), getSpin()); 
+   }
    void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
 private:
-   Orbiter* parts[2]; //  fragments when GPS center breaks apart
-   int arraySize = 2;
-};
-/*ALL the individual piece classes just need draw functions*/
-//GPS pieces
-class GPSCenter : public BigPiece
-{
-public:
-   GPSCenter(Orbiter& parent) : BigPiece(parent, 7) {};
-
-   void draw(ogstream& gout) override { gout.drawGPSCenter(getPosition(), getSpin()); }
+   Orbiter* parts[3];
+   int arraySize = 3;
 };
 
-class GPSLeft : public BigPiece
+class GPSRight : public Piece
 {
 public:
-   GPSLeft(Orbiter& parent) : BigPiece(parent, 8) {};
+   GPSRight(Orbiter& parent) : Piece(parent, 8) {};
 
-   void draw(ogstream& gout) override { gout.drawGPSLeft(getPosition(), getSpin()); }
-};
-
-class GPSRight : public BigPiece
-{
-public:
-   GPSRight(Orbiter& parent) : BigPiece(parent, 8) {};
-
-   void draw(ogstream& gout) override { gout.drawGPSRight(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawGPSRight(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[3];
+   int arraySize = 3;
 };
 
 //HUBBLE PIECES
-class HubbleTelescope : public BigPiece
+class HubbleTelescope : public Piece
 {
 public:
-   HubbleTelescope(Orbiter& parent) : BigPiece(parent, 10) {};
+   HubbleTelescope(Orbiter& parent) : Piece(parent, 10) {};
 
-   void draw(ogstream& gout) override { gout.drawHubbleTelescope(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   { 
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawHubbleTelescope(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[3];
+   int arraySize = 3;
 };
 
-class HubbleComputer : public SmallPiece
+class HubbleComputer : public Piece
 {
 public:
-   HubbleComputer(Orbiter& parent) : SmallPiece(parent, 7) {};
+   HubbleComputer(Orbiter& parent) : Piece(parent, 7) {};
 
-   void draw(ogstream& gout) override { gout.drawHubbleComputer(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   { 
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawHubbleComputer(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[2];
+   int arraySize = 2;
 };
 
-class HubbleLeft : public SmallPiece
+class HubbleLeft : public Piece
 {
 public:
-   HubbleLeft(Orbiter& parent) : SmallPiece(parent, 8) {};
+   HubbleLeft(Orbiter& parent) : Piece(parent, 8) {};
 
-   void draw(ogstream& gout) override { gout.drawHubbleLeft(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawHubbleLeft(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[2];
+   int arraySize = 2;
 };
 
-class HubbleRight : public SmallPiece
+class HubbleRight : public Piece
 {
 public:
-   HubbleRight(Orbiter& parent) : SmallPiece(parent, 8) {};
+   HubbleRight(Orbiter& parent) : Piece(parent, 8) {};
 
-   void draw(ogstream& gout) override { gout.drawHubbleRight(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawHubbleRight(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[2];
+   int arraySize = 2;
 };
 
 //DRAGON PIECES
-class DragonCenter : public GiantPiece
+class DragonCenter : public Piece
 {
 public:
-   DragonCenter(Orbiter& parent) : GiantPiece(parent, 6) {};
+   DragonCenter(Orbiter& parent) : Piece(parent, 6) {};
 
-   void draw(ogstream& gout) override { gout.drawCrewDragonCenter(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawCrewDragonCenter(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[4];
+   int arraySize = 4;
 };
 
-class DragonLeft : public SmallPiece
+class DragonLeft : public Piece
 {
 public:
-   DragonLeft(Orbiter& parent) : SmallPiece(parent, 6) {};
+   DragonLeft(Orbiter& parent) : Piece(parent, 6) {};
 
-   void draw(ogstream& gout) override { gout.drawCrewDragonLeft(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawCrewDragonLeft(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[2];
+   int arraySize = 2;
 };
 
-class DragonRight : public SmallPiece
+class DragonRight : public Piece
 {
 public:
-   DragonRight(Orbiter& parent) : SmallPiece(parent, 6) {};
+   DragonRight(Orbiter& parent) : Piece(parent, 6) {};
 
-   void draw(ogstream& gout) override { gout.drawCrewDragonRight(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawCrewDragonRight(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[2];
+   int arraySize = 2;
 };
 
 //STARLINK PIECES
-class StarlinkBody : public BigPiece
+class StarlinkBody : public Piece
 {
 public:
-   StarlinkBody(Orbiter& parent) : BigPiece(parent, 2) {};
+   StarlinkBody(Orbiter& parent) : Piece(parent, 2) {};
 
-   void draw(ogstream& gout) override { gout.drawStarlinkBody(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawStarlinkBody(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[3];
+   int arraySize = 3;
 };
 
-class StarlinkArray : public BigPiece
+class StarlinkArray : public Piece
 {
 public:
-   StarlinkArray(Orbiter& parent) : BigPiece(parent, 4) {};
+   StarlinkArray(Orbiter& parent) : Piece(parent, 4) {};
 
-   void draw(ogstream& gout) override { gout.drawStarlinkArray(getPosition(), getSpin()); }
+   void draw(ogstream& gout) override 
+   {
+      if (checkIsCollided())
+      {
+         for (int i = 0; i < arraySize; i++)
+            parts[i]->draw(gout); // draw all parts (pieces) of the orbiter (satellite) that broke apart
+      }
+      else
+         gout.drawStarlinkArray(getPosition(), getSpin()); 
+   }
+   void breakApart() override;
+   void moveParts(double time) override;
+   void checkPartsCollisions(Orbiter& orbiter) override;
+private:
+   Orbiter* parts[3];
+   int arraySize = 3;
 };

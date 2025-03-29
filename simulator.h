@@ -17,6 +17,7 @@
 #include "satellite.h"
 #include "spaceplane.h"
 #include "uiInteract.h"
+#include <vector>
 
 using namespace std;
 

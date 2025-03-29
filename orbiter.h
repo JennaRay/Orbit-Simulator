@@ -77,6 +77,7 @@ public:
 
    virtual void move(double time);
    virtual void moveParts(double time) {} // to be overridden by subclasses (e.g., Satellite, Piece, Fragment
+   virtual void checkPartsCollisions(Orbiter& orbiter) {}; //to be overrideen
    virtual void collide();
    virtual void draw(ogstream& gout) {};
 
@@ -92,36 +93,6 @@ private:
 
 };
 
-
-//Part subclass
-
-class Part : public Orbiter
-{
-public:
-   //Constructors
-   Part() : Orbiter() {}
-
-   void collide() override {}
-   void draw(ogstream& gout) {}
-};
-
-//Piece subclass
-//Changing to satellite sublcass
-//class Piece : public Orbiter
-//{
-//public:
-//   //Constructors
-//   Piece() : Orbiter() {}
-//
-//   void collide() override {}
-//   void draw(ogstream& gout) {}
-//   void breakApart() {}
-//
-//private:
-//
-//   //Part parts[];
-//};
-
 //Fragment subclass
 
 class Fragment : public Orbiter
@@ -131,9 +102,13 @@ public:
    inline Fragment(const Orbiter& parent) : Orbiter(parent) { kick(); };
 
    void collide() {}
-   void draw(ogstream& gout) { gout.drawFragment(getPosition(), getSpin()); }
+   void draw(ogstream& gout) 
+   { 
+      //if (not checkIsCollided())
+         gout.drawFragment(getPosition(), getSpin()); 
+   }
    void kick();
-   void retire() {}
+   void retire() { setCollide(true); }
 private:
    int retireTime;
 };

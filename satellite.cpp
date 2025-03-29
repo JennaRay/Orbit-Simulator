@@ -1,5 +1,6 @@
 #pragma once
 #include "satellite.h"
+#include "position.h"
 
 //Move parts could probably be inherited from satellite, but I'd have to figure out how to get the length of the array
 
@@ -37,6 +38,23 @@ void Sputnik::moveParts(double time)
          parts[i]->move(time);
 }
 
+void Sputnik::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
 /***************************************************
 * GPS METHODS
 ***************************************************/
@@ -65,7 +83,27 @@ void GPS::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the GPS
       if (parts[i] != nullptr) // check if part exists
-         parts[i]->move(time);
+         if (parts[i]->checkIsCollided())
+            parts[i]->moveParts(time);
+         else
+            parts[i]->move(time);
+}
+
+void GPS::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
 }
 
 /*****************************************************
@@ -113,7 +151,27 @@ void Hubble::moveParts(double time)
 {
    for (int i = 0; i < 4; i++) // move all parts of the hubble
       if (parts[i] != nullptr) // check if part exists
-         parts[i]->move(time);
+         if (parts[i]->checkIsCollided())
+            parts[i]->moveParts(time);
+         else
+            parts[i]->move(time);
+}
+
+void Hubble::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
 }
 
 /*****************************************************
@@ -162,7 +220,27 @@ void Dragon::moveParts(double time)
 {
    for (int i = 0; i < 5; i++) // move all parts of the dragon
       if (parts[i] != nullptr) // check if part exists
-         parts[i]->move(time);
+         if (parts[i]->checkIsCollided())
+            parts[i]->moveParts(time);
+         else
+            parts[i]->move(time);
+}
+
+void Dragon::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
 }
 
 /*****************************************************
@@ -209,10 +287,28 @@ void Starlink::moveParts(double time)
 {
    for (int i = 0; i < 4; i++) // move all parts of the starlink
       if (parts[i] != nullptr) // check if part exists
-         parts[i]->move(time);
+         if (parts[i]->checkIsCollided())
+            parts[i]->moveParts(time);
+         else
+            parts[i]->move(time);
 }
 
-
+void Starlink::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
 
 
 //Other Piece subclass breakApart methods
@@ -235,27 +331,386 @@ void Piece::kick()
    setPositionPixels(newX, newY);
 }
 
-void GiantPiece::breakApart()
+/*GPS PARTS*/
+
+void GPSCenter::breakApart()
 {
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+   parts[2] = new Fragment(*this);
+}
+
+void GPSCenter::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void GPSCenter::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void GPSLeft::breakApart()
+{
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+   parts[2] = new Fragment(*this);
+}
+
+void GPSLeft::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void GPSLeft::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void GPSRight::breakApart()
+{
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+   parts[2] = new Fragment(*this);
+}
+
+void GPSRight::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void GPSRight::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+/*HUBBLE PIECES*/
+void HubbleTelescope::breakApart()
+{
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+   parts[2] = new Fragment(*this);
+}
+
+void HubbleTelescope::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void HubbleTelescope::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void HubbleComputer::breakApart()
+{
+   cout << "SmallPiece breakApart" << endl; //for debuggins
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+}
+
+void HubbleComputer::moveParts(double time)
+{
+   for (int i = 0; i < 2; i++) // move all parts of the small piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}  
+
+void HubbleComputer::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void HubbleRight::breakApart()
+{
+   cout << "SmallPiece breakApart" << endl; //for debuggins
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+}
+
+void HubbleRight::moveParts(double time)
+{
+   for (int i = 0; i < 2; i++) // move all parts of the small piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void HubbleRight::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void HubbleLeft::breakApart()
+{
+   cout << "SmallPiece breakApart" << endl; //for debuggins
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+}
+
+void HubbleLeft::moveParts(double time)
+{
+   for (int i = 0; i < 2; i++) // move all parts of the small piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void HubbleLeft::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+
+/*DRAGON PIECES*/ 
+
+void DragonCenter::breakApart()
+{
+   cout << "GiantPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
    parts[2] = new Fragment(*this);
    parts[3] = new Fragment(*this);
 }
 
-void BigPiece::breakApart()
+void DragonCenter::moveParts(double time)
+{
+   for (int i = 0; i < 4; i++) // move all parts of the giant piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void DragonCenter::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void DragonLeft::breakApart()
+{
+   cout << "SmallPiece breakApart" << endl; //for debuggins
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+}
+
+void DragonLeft::moveParts(double time)
+{
+   for (int i = 0; i < 2; i++) // move all parts of the small piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void DragonLeft::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void DragonRight::breakApart()
+{
+   cout << "SmallPiece breakApart" << endl; //for debuggins
+   parts[0] = new Fragment(*this);
+   parts[1] = new Fragment(*this);
+}
+
+void DragonRight::moveParts(double time)
+{
+   for (int i = 0; i < 2; i++) // move all parts of the small piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void DragonRight::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+/*STARLINK PIECES*/
+void StarlinkBody::breakApart()
 {
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
    parts[2] = new Fragment(*this);
 }
 
-void SmallPiece::breakApart()
+void StarlinkBody::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void StarlinkBody::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
+
+void StarlinkArray::breakApart()
 {
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
+   parts[2] = new Fragment(*this);
 }
 
+void StarlinkArray::moveParts(double time)
+{
+   for (int i = 0; i < 3; i++) // move all parts of the big piece
+      if (parts[i] != nullptr) // check if part exists
+         parts[i]->move(time);
+}
+
+void StarlinkArray::checkPartsCollisions(Orbiter& orbiter)
+{
+   for (int i = 0; i < arraySize; i++)
+   {
+      if (parts[i]->checkIsCollided())
+         parts[i]->checkPartsCollisions(orbiter);
+      else
+      {
+         if (computeDistance(parts[i]->getPosition(), orbiter.getPosition()) < (parts[i]->getRadiusMeters() + orbiter.getRadiusMeters()))
+         {
+            parts[i]->collide();
+            orbiter.collide();
+         }
+      }
+   }
+}
 
 
 
