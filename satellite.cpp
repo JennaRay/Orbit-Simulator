@@ -220,13 +220,15 @@ void Starlink::moveParts(double time)
 void Piece::kick()
 {
    //random angle between 0 and 360
-   Angle newAngle(random(-180, 180));
-   setAngle(newAngle);
+   Angle newAngle(random(-360, 360));
    //add random velocity to speed between 5000 and 9000 m/s
-   double newSpeed = random(5000, 9000);
+   double newSpeed = random(5000, 9000) * 0.25;
    Velocity v = getVelocity();
-   v.addDX(newSpeed);
-   v.addDY(newSpeed);
+   double dx = newSpeed * sin(newAngle.getRadians());
+   double dy = newSpeed * cos(newAngle.getRadians());
+   v.addDX(dx);
+   v.addDY(dy);
+   setVelocity(v);
    //update position
    double newX = getPosition().getPixelsX() + v.getDX() * 0.004 + 0.5 * 1 * pow(0.004, 2);
    double newY = getPosition().getPixelsY() + v.getDY() * 0.004 + 0.5 * 1 * pow(0.004, 2);
