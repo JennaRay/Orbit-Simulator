@@ -113,7 +113,7 @@ public:
       spinRate = random(180, 360);
    };
 
-   void collide() {}
+   void collide() { retireCount = retireTime; }
    void draw(ogstream& gout) 
    { 
       if (not isRetired())
