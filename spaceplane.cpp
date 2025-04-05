@@ -32,8 +32,9 @@ void SpacePlane::moveForward()
 *******************************/
 void SpacePlane::moveBullet(double time) {
 	// .begin() is the 1st element in the vector and .end() is last
-	for (auto it = bullets.begin(); it != bullets.end(); it++) {
-		it->moveForward(time);
+	for (auto& bullet : bullets)
+   {
+      bullet->moveForward(time); // move each bullet by the time step
 		//if (it->checkIsCollided()) // check collision
 		//	it = bullets.erase(it); // if collided, erase
 	}
@@ -46,7 +47,7 @@ void SpacePlane::moveBullet(double time) {
 void SpacePlane::drawBullets(ogstream& gout)
 {
 	for (auto& bullet : bullets)
-		bullet.draw(gout);
+		bullet->draw(gout);
 }
 
 /*************************************
@@ -56,7 +57,7 @@ void SpacePlane::drawBullets(ogstream& gout)
 void SpacePlane::drawBullet(ogstream& gout)
 {
 	for (auto& bullet : bullets)
-		bullet.draw(gout);
+		bullet->draw(gout);
 }
 
 /*************************************
@@ -65,23 +66,19 @@ void SpacePlane::drawBullet(ogstream& gout)
 *************************************/
 void SpacePlane::checkBulletCollisions(Orbiter& orbiter)
 {
-   for (auto it = bullets.begin(); it != bullets.end(); )
+   for (auto& bullet : bullets)
    {  
-      if (not it->checkIsCollided())
+      if (not bullet->checkIsCollided())
       {
-         it = bullets.erase(it); // erase the bullet if it has collided
+         //bullets.erase(bullet); // erase the bullet if it has collided
          continue; // skip to the next iteration
       }
-      if (computeDistance(it->getPosition(), orbiter.getPosition()) < (it->getRadiusMeters() + orbiter.getRadiusMeters()))
+      if (computeDistance(bullet->getPosition(), orbiter.getPosition()) < (bullet->getRadiusMeters() + orbiter.getRadiusMeters()))
       {
          // If the bullet collides with the orbiter
          orbiter.collide(); // call collide on the orbiter
-         it->collide(); // erase the bullet after collision
+         bullet->collide(); // erase the bullet after collision
 
-      }
-      else
-      {
-         ++it; // move to the next bullet
       }
    }
 }

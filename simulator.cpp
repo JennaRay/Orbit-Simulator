@@ -44,10 +44,10 @@ void Simulator::checkCollisions()
          orbiters[i]->checkPartsCollisions(dreamChaser); // check if the plane has collided with the parts of the orbiter
          if (dreamChaser.hasBullets())
          {
-            vector<Bullet> bullets = dreamChaser.getBullets();
+            vector<Bullet*> bullets = dreamChaser.getBullets();
             for (auto& bullet : bullets)
             {
-               orbiters[i]->checkPartsCollisions(bullet); // check if any bullets have collided with the parts of the orbiter
+               orbiters[i]->checkPartsCollisions(*bullet); // check if any bullets have collided with the parts of the orbiter
             }
          }
       }
@@ -56,13 +56,13 @@ void Simulator::checkCollisions()
          if (dreamChaser.hasBullets())
          {
             //check if bullets have collided with orbiter
-            vector<Bullet> bullets = dreamChaser.getBullets();
+            vector<Bullet*> bullets = dreamChaser.getBullets();
             for (auto& bullet : bullets)
             {
-               if (computeDistance(bullet.getPosition(), orbiters[i]->getPosition()) < (bullet.getRadiusMeters() + orbiters[i]->getRadiusMeters()))
+               if (computeDistance(bullet->getPosition(), orbiters[i]->getPosition()) < (bullet->getRadiusMeters() + orbiters[i]->getRadiusMeters()))
                {
                   orbiters[i]->collide(); // call collide on the orbiter
-                  bullet.collide(); // mark the bullet as collided
+                  bullet->collide(); // mark the bullet as collided
                   break; // exit the loop since the bullet has collided
                }
             }

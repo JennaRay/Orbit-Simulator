@@ -40,7 +40,7 @@ public:
    {
       return !bullets.empty(); // returns true if the bullets vector is not empty
    }
-   vector<Bullet>& getBullets()
+   vector<Bullet*> getBullets()
    {
       return bullets; // returns a reference to the bullets vector
    }
@@ -52,12 +52,12 @@ public:
    double getThrust() const { return thrust; }
    void moveForward();
    // bullet mechanics
-   void shootBullet() { bullets.push_back(Bullet(*this, thrust)); } // .push_back adds element to end of vector
+   void shootBullet() { bullets.push_back(new Bullet(*this, thrust)); } // .push_back adds element to end of vector
    void moveBullet(double time);
    void drawBullets(ogstream& gout);
    void checkBulletCollisions(Orbiter& orbiter);
 
 private:
    double thrust;
-   vector<Bullet> bullets;
+   vector<Bullet*> bullets;
 };
