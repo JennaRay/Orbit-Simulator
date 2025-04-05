@@ -147,6 +147,7 @@
     <ClCompile Include="position.cpp" />
     <ClCompile Include="satellite.cpp" />
     <ClCompile Include="simulator.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="spaceplane.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="uiDraw.cpp" />
