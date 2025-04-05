@@ -111,17 +111,18 @@ public:
       retireCount = 1; // start counting down to retirement
       retireTime = random(50, 100);
       spinRate = random(180, 360);
+      setCollide(false);
    };
 
-   void collide() { retireCount = retireTime; }
+   void collide() override { setCollide(true); }
    void draw(ogstream& gout) 
    { 
-      if (not isRetired())
+      if (not isRetired() && not checkIsCollided())
          gout.drawFragment(getPosition(), getSpin()); 
    }
    void updateSpin() override;
    void kick();
-   void retire() { retired = true; }
+   void retire() { retired = true; setCollide(true); }
    void checkRetire()
    {
       if (retireCount >= retireTime)

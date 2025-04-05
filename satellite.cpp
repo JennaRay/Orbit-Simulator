@@ -501,14 +501,13 @@ void HubbleTelescope::checkPartsCollisions(Orbiter& orbiter)
 
 void HubbleComputer::breakApart()
 {
-   cout << "SmallPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
 }
 
 void HubbleComputer::moveParts(double time)
 {
-   for (int i = 0; i < 2; i++) // move all parts of the small piece
+   for (int i = 0; i < 2; i++) // move all parts
       if (parts[i] != nullptr) // check if part exists
       {
          parts[i]->move(time);
@@ -535,7 +534,6 @@ void HubbleComputer::checkPartsCollisions(Orbiter& orbiter)
 
 void HubbleRight::breakApart()
 {
-   cout << "SmallPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
 }
@@ -569,7 +567,6 @@ void HubbleRight::checkPartsCollisions(Orbiter& orbiter)
 
 void HubbleLeft::breakApart()
 {
-   cout << "SmallPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
 }
@@ -642,7 +639,6 @@ void DragonCenter::checkPartsCollisions(Orbiter& orbiter)
 
 void DragonLeft::breakApart()
 {
-   cout << "SmallPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
 }
@@ -676,7 +672,6 @@ void DragonLeft::checkPartsCollisions(Orbiter& orbiter)
 
 void DragonRight::breakApart()
 {
-   cout << "SmallPiece breakApart" << endl; //for debuggins
    parts[0] = new Fragment(*this);
    parts[1] = new Fragment(*this);
 }

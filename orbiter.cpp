@@ -56,6 +56,7 @@ void Orbiter::move(double time)
 void Orbiter::collide()
 {
    isCollided = true;
+   setCollide(true);
 }
 
 //Fragment class

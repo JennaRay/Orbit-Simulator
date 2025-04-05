@@ -49,7 +49,7 @@ public:
 
 	void draw(ogstream& gout) override
 	{
-		if (expireCount < expireTime) // Only draw if not expired or collided - need to add collide check
+		if (expireCount < expireTime && not checkIsCollided()) // Only draw if not expired or collided - need to add collide check
 			gout.drawProjectile(getPosition());
 	}
 
