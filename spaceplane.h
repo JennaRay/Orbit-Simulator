@@ -36,16 +36,26 @@ public:
       thrust = 0.0;
    }
 
+   bool hasBullets() const
+   {
+      return !bullets.empty(); // returns true if the bullets vector is not empty
+   }
+   vector<Bullet>& getBullets()
+   {
+      return bullets; // returns a reference to the bullets vector
+   }
    void draw(ogstream& gout) { gout.drawShip(getPosition(), getSpin(), thrust);}
    void drawBullet(ogstream& gout);
    void rotate(double delta)   { addSpin(delta);   }
    void applyThrust()   { thrust = THRUST_ACCEL;   }
    void stopThrust()   { thrust = 0.0;   }
+   double getThrust() const { return thrust; }
    void moveForward();
    // bullet mechanics
-   void shootBullet() { bullets.push_back(Bullet(*this)); } // .push_back adds element to end of vector
+   void shootBullet() { bullets.push_back(Bullet(*this, thrust)); } // .push_back adds element to end of vector
    void moveBullet(double time);
    void drawBullets(ogstream& gout);
+   void checkBulletCollisions(Orbiter& orbiter);
 
 private:
    double thrust;

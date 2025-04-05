@@ -58,3 +58,30 @@ void SpacePlane::drawBullet(ogstream& gout)
 	for (auto& bullet : bullets)
 		bullet.draw(gout);
 }
+
+/*************************************
+* CHECK BULLET COLLISIONS
+* check if any bullets have collided
+*************************************/
+void SpacePlane::checkBulletCollisions(Orbiter& orbiter)
+{
+   for (auto it = bullets.begin(); it != bullets.end(); )
+   {  
+      if (not it->checkIsCollided())
+      {
+         it = bullets.erase(it); // erase the bullet if it has collided
+         continue; // skip to the next iteration
+      }
+      if (computeDistance(it->getPosition(), orbiter.getPosition()) < (it->getRadiusMeters() + orbiter.getRadiusMeters()))
+      {
+         // If the bullet collides with the orbiter
+         orbiter.collide(); // call collide on the orbiter
+         it->collide(); // erase the bullet after collision
+
+      }
+      else
+      {
+         ++it; // move to the next bullet
+      }
+   }
+}

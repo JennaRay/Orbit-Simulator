@@ -23,7 +23,7 @@ class Satellite : public Orbiter
 public:
    //Constructors
    Satellite() : Orbiter() {}
-   Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Orbiter(position, velocity, angle, acceleration, radius, isCollided) {}
+   Satellite(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided = false) : Orbiter(position, velocity, angle, acceleration, radius, isCollided) {}
 
    void collide() override {
       setCollide(true);
@@ -69,7 +69,7 @@ class GPS : public Satellite
 {
 public:
    GPS() : Satellite() { setRadius(12); }
-   GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided) : Satellite(position, velocity, angle, acceleration, radius, isCollided) {}
+   GPS(Position position, Velocity velocity, Angle angle, Acceleration acceleration, double radius, bool isCollided = false) : Satellite(position, velocity, angle, acceleration, radius, isCollided) {}
 
    void draw(ogstream& gout);
    void breakApart() override;

@@ -1,10 +1,11 @@
 #pragma once
 #include "orbiter.h"
+#include "spaceplane.h"
 
 class Bullet : public Orbiter
 {
 public:
-	Bullet(Orbiter& parent)
+	Bullet(Orbiter& parent, double thrust)
 	{
 		Position pos = parent.getPosition();
 		Velocity v = parent.getVelocity();
@@ -12,8 +13,8 @@ public:
 		// Set the position and velocity
 		pos.addPixelsX(20 * sin(parent.getSpin()));
 		pos.addPixelsY(20 * cos(parent.getSpin()));
-		v.addDX(9000 * sin(parent.getSpin()));
-		v.addDY(9000 * cos(parent.getSpin()));
+		v.addDX(((thrust/4) + 9000) * sin(parent.getSpin()));
+		v.addDY(((thrust/4) + 9000) * cos(parent.getSpin()));
 
 		setPosition(pos);
 		setVelocity(v);
@@ -23,7 +24,10 @@ public:
 		expireTime = 100;
       setCollide(false);
 	}
-
+	void collide() override
+	{
+		setCollide(true);
+	}
 	void moveForward(double time) {
 
 		Position pos = getPosition();
