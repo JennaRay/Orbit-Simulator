@@ -42,10 +42,13 @@ void Simulator::checkCollisions()
       if (orbiters[i]->checkIsCollided())
       {
          orbiters[i]->checkPartsCollisions(dreamChaser); // check if the plane has collided with the parts of the orbiter
-         vector<Bullet> bullets = dreamChaser.getBullets();
-         for (auto& bullet : bullets)
+         if (dreamChaser.hasBullets())
          {
-            orbiters[i]->checkPartsCollisions(bullet); // check if any bullets have collided with the parts of the orbiter
+            vector<Bullet> bullets = dreamChaser.getBullets();
+            for (auto& bullet : bullets)
+            {
+               orbiters[i]->checkPartsCollisions(bullet); // check if any bullets have collided with the parts of the orbiter
+            }
          }
       }
       else
