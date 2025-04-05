@@ -122,7 +122,11 @@ public:
    }
    void updateSpin() override;
    void kick();
-   void retire() { retired = true; setCollide(true); }
+   void retire() 
+   { 
+      retired = true; 
+      setCollide(true); //so that nothing runs into it
+   }
    void checkRetire()
    {
       if (retireCount >= retireTime)
