@@ -29,6 +29,7 @@ public:
       setCollide(true);
       breakApart();
    }
+   void updateSpin() override;
    void draw(ostream& gout) {}
    virtual void breakApart() {}
    virtual void moveParts(double time) {};

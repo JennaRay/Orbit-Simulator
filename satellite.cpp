@@ -4,6 +4,18 @@
 
 //Move parts could probably be inherited from satellite, but I'd have to figure out how to get the length of the array
 
+void Satellite::updateSpin()
+{
+   double dx = getVelocity().getDX();
+   double dy = getVelocity().getDY();
+
+   double angularVelocity = (atan2(0 - dx, 0 - dy));
+   addAngle(angularVelocity);
+   if (angularVelocity > 0)
+      addSpin(angularVelocity * -0.01);
+   else
+      addSpin(angularVelocity * 0.01);
+}
 
 
 /******************************
@@ -35,7 +47,11 @@ void Sputnik::moveParts(double time)
 {
    for (int i = 0; i < 4; i++) // move all parts of the satellite
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin(); // update the spin of each part
+      }
+      
 }
 
 void Sputnik::checkPartsCollisions(Orbiter& orbiter)
@@ -86,7 +102,11 @@ void GPS::moveParts(double time)
          if (parts[i]->checkIsCollided())
             parts[i]->moveParts(time);
          else
+         {
             parts[i]->move(time);
+            parts[i]->updateSpin();
+         }
+      
 }
 
 void GPS::checkPartsCollisions(Orbiter& orbiter)
@@ -154,7 +174,10 @@ void Hubble::moveParts(double time)
          if (parts[i]->checkIsCollided())
             parts[i]->moveParts(time);
          else
+         {
             parts[i]->move(time);
+            parts[i]->updateSpin();
+         }
 }
 
 void Hubble::checkPartsCollisions(Orbiter& orbiter)
@@ -223,7 +246,10 @@ void Dragon::moveParts(double time)
          if (parts[i]->checkIsCollided())
             parts[i]->moveParts(time);
          else
+         {
             parts[i]->move(time);
+            parts[i]->updateSpin();
+         }
 }
 
 void Dragon::checkPartsCollisions(Orbiter& orbiter)
@@ -290,7 +316,10 @@ void Starlink::moveParts(double time)
          if (parts[i]->checkIsCollided())
             parts[i]->moveParts(time);
          else
+         {
             parts[i]->move(time);
+            parts[i]->updateSpin();
+         }
 }
 
 void Starlink::checkPartsCollisions(Orbiter& orbiter)
@@ -344,7 +373,10 @@ void GPSCenter::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void GPSCenter::checkPartsCollisions(Orbiter& orbiter)
@@ -375,7 +407,10 @@ void GPSLeft::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void GPSLeft::checkPartsCollisions(Orbiter& orbiter)
@@ -406,7 +441,10 @@ void GPSRight::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void GPSRight::checkPartsCollisions(Orbiter& orbiter)
@@ -438,7 +476,10 @@ void HubbleTelescope::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void HubbleTelescope::checkPartsCollisions(Orbiter& orbiter)
@@ -469,7 +510,10 @@ void HubbleComputer::moveParts(double time)
 {
    for (int i = 0; i < 2; i++) // move all parts of the small piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }  
 
 void HubbleComputer::checkPartsCollisions(Orbiter& orbiter)
@@ -500,7 +544,10 @@ void HubbleRight::moveParts(double time)
 {
    for (int i = 0; i < 2; i++) // move all parts of the small piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void HubbleRight::checkPartsCollisions(Orbiter& orbiter)
@@ -531,7 +578,10 @@ void HubbleLeft::moveParts(double time)
 {
    for (int i = 0; i < 2; i++) // move all parts of the small piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void HubbleLeft::checkPartsCollisions(Orbiter& orbiter)
@@ -567,7 +617,10 @@ void DragonCenter::moveParts(double time)
 {
    for (int i = 0; i < 4; i++) // move all parts of the giant piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void DragonCenter::checkPartsCollisions(Orbiter& orbiter)
@@ -598,7 +651,10 @@ void DragonLeft::moveParts(double time)
 {
    for (int i = 0; i < 2; i++) // move all parts of the small piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void DragonLeft::checkPartsCollisions(Orbiter& orbiter)
@@ -629,7 +685,10 @@ void DragonRight::moveParts(double time)
 {
    for (int i = 0; i < 2; i++) // move all parts of the small piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void DragonRight::checkPartsCollisions(Orbiter& orbiter)
@@ -661,7 +720,10 @@ void StarlinkBody::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void StarlinkBody::checkPartsCollisions(Orbiter& orbiter)
@@ -692,7 +754,10 @@ void StarlinkArray::moveParts(double time)
 {
    for (int i = 0; i < 3; i++) // move all parts of the big piece
       if (parts[i] != nullptr) // check if part exists
+      {
          parts[i]->move(time);
+         parts[i]->updateSpin();
+      }
 }
 
 void StarlinkArray::checkPartsCollisions(Orbiter& orbiter)

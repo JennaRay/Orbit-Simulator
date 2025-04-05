@@ -74,8 +74,13 @@ public:
    virtual void addSpin(double delta) { spin += delta; }
    virtual void addMetersX(double x) { position.addMetersX(x); }
    virtual void addMetersY(double y) { position.addMetersY(y); }
+   virtual void addAngle(double delta) {
+      angle.add(delta);
+   }
+
 
    virtual void move(double time);
+   virtual void updateSpin() {}; //the spin that used to be in move.
    virtual void moveParts(double time) {} // to be overridden by subclasses (e.g., Satellite, Piece, Fragment
    virtual void checkPartsCollisions(Orbiter& orbiter) {}; //to be overrideen
    virtual void collide();
@@ -99,16 +104,35 @@ class Fragment : public Orbiter
 {
 public:
    //Constructors
-   inline Fragment(const Orbiter& parent) : Orbiter(parent) { kick(); };
+   inline Fragment(const Orbiter& parent) : Orbiter(parent)
+   {
+      kick();
+
+      retireCount = 1; // start counting down to retirement
+      retireTime = random(50, 100);
+      spinRate = random(180, 360);
+   };
 
    void collide() {}
    void draw(ogstream& gout) 
    { 
-      //if (not checkIsCollided())
+      if (not isRetired())
          gout.drawFragment(getPosition(), getSpin()); 
    }
+   void updateSpin() override;
    void kick();
-   void retire() { setCollide(true); }
+   void retire() { retired = true; }
+   void checkRetire()
+   {
+      if (retireCount >= retireTime)
+         retire();
+      else
+         retireCount++;
+   }
+   bool isRetired() const { return retired; }
 private:
    int retireTime;
+   int retireCount;
+   bool retired = false;
+   double spinRate;
 };

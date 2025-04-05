@@ -40,13 +40,13 @@ void Orbiter::move(double time)
    velocity.setDX(dx);
    velocity.setDY(dy);
 
-   //update angle
-   double angularVelocity = (atan2(0 - dx, 0 - dy));
-   angle.add(angularVelocity);
-   if (angularVelocity > 0)
-      spin += angularVelocity * -0.01;
-   else
-      spin += angularVelocity * 0.01;
+   //update angle - moved to own class
+   //double angularVelocity = (atan2(0 - dx, 0 - dy));
+   //angle.add(angularVelocity);
+   //if (angularVelocity > 0)
+   //   spin += angularVelocity * -0.01;
+   //else
+   //   spin += angularVelocity * 0.01;
 }
 
 /****************************************
@@ -76,4 +76,12 @@ void Fragment::kick()
    double newX = getDistance(getPosition().getPixelsX(), v.getDX(), 0.004, 0.0);
    double newY = getDistance(getPosition().getPixelsY(), v.getDY(), 0.004, 0.0);
    setPositionPixels(newX, newY);
+}
+
+void Fragment::updateSpin()
+{
+   //Fragments spin wildly
+   addSpin(spinRate);
+
+   checkRetire();
 }

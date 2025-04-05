@@ -109,7 +109,10 @@ void Simulator::moveOrbiters()
          orbiters[i]->moveParts(time);
       }
       else
+      {
          orbiters[i]->move(time);
+         orbiters[i]->updateSpin(); // update the spin after moving
+      }
    }
    //move dreamChaser
    dreamChaser.move(time);
